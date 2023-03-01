@@ -20,12 +20,27 @@ from django.template.loader import render_to_string
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 
+from django.views.generic import ListView
+
 import aieco.models as model
 
 from .tools import gToken
 
 class IndexView(TemplateView):
     template_name='aieco/index.html'
+    
+    def get(self, request, *args, **kwargs):
+
+        rUser = request.user
+
+        Account = model.Account.objects.get(id=rUser.id)
+
+        context = self.get_context_data(**kwargs)
+        context={
+            'Account':Account,
+        }
+
+        return self.render_to_response(context)
 
 class SingupView(UserPassesTestMixin, TemplateView):
     template_name='aieco/registration/singup.html'
@@ -133,7 +148,7 @@ def PasswordResetRequestView(request):
 			if associated_users.exists():
 				for user in associated_users:
 					subject = "Solicitud - Restablecer Contraseña"
-					email_template_name = "password/password_reset_email.txt"
+					email_template_name = "aieco/password/password_reset_email.txt"
 					c = {
                     'username': user.username,
 					"uid": urlsafe_base64_encode(force_bytes(user.pk)),
@@ -151,7 +166,7 @@ def PasswordResetRequestView(request):
 					return redirect ("/accounts/password_reset/done/")
  
 	password_reset_form = PasswordResetForm()
-	return render(request=request, template_name="registration/password/password_reset.html", context={"password_reset_form":password_reset_form})
+	return render(request=request, template_name="aieco/registration/password/password_reset.html", context={"password_reset_form":password_reset_form})
 
 
 
@@ -177,3 +192,16 @@ def EmailConfirmView(request, uidb64, token):
 
 def ComingSoonView(request):
     return render(request, '000.html')
+
+
+
+
+
+
+####### ADMIN ######
+
+class AccountFilesListView(ListView):
+    model = model.AccountFiles
+    template_name = 'aieco/admin/index.html'
+    context_object_name = 'files'
+

@@ -140,3 +140,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # UserModel -->Conif
 AUTH_USER_MODEL = 'aieco.Account'
 USERNAME_FIELD = 'Username'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, '')
+MEDIA_URL = '/'

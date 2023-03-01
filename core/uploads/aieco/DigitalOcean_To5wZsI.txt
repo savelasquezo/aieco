@@ -1,0 +1,126 @@
+DigitalOcean
+
+ubuntu-vrt-fund-(root-0zV7!Z4V3JcR)
+IP:167.71.28.44
+postgresql - (4oPn2655Lmn)
+port: 22937
+
+
+
+
+
+
+
+
+
+ubuntu-geo-esp-(root-7F$bi$0KHa$T)
+IP:67.205.186.162
+port: 4563
+
+Admin: geoesp
+PW: 4dd&8v32Wf*f
+
+https://sso.godaddy.com/v1/login?realm=pass&app=ox
+
+contabilidad@geoesp.com.co
+&3oi91bS$IZkqoNqw6@R6l
+
+proyectos@geoesp.com.co
+W4R&cwvf6IN212LRb2#b8W
+
+
+Hostinger
+
+PrestaShop-SimcardTravel
+Email: savelasquezo@gmail.com
+Contraseña: COi5TaZMpJ@
+
+
+
+
+
+Mateo VPS: COi5TaZMpJ@
+
+
+
+Simon Velasquez
+En django que me recomiendas para guardar documentos a un Usuario ?
+En Django, la forma más común de guardar documentos para un usuario es utilizando el modelo FileField o ImageField en una clase de modelo personalizada que se relaciona con el modelo User. Puedes crear un modelo personalizado que se parezca a esto:
+
+javascript
+Copy code
+from django.db import models
+from django.contrib.auth.models import User
+
+class Document(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    document = models.FileField(upload_to='documents/')
+En este modelo, se utiliza una clave externa (ForeignKey) para relacionar cada documento con un usuario específico. El campo document es un FileField que permite cargar un archivo al servidor y almacenarlo en la ruta especificada en el parámetro upload_to.
+
+Después de definir este modelo, puedes crear instancias de él para guardar los documentos de un usuario específico. Por ejemplo, para guardar un documento para el usuario actualmente autenticado, puedes hacer lo siguiente:
+
+python
+Copy code
+from django.shortcuts import render, redirect
+from .models import Document
+
+def upload_document(request):
+    if request.method == 'POST':
+        document = request.FILES['document']
+        doc = Document(user=request.user, document=document)
+        doc.save()
+        return redirect('home')
+    else:
+        return render(request, 'upload.html')
+En este ejemplo, se utiliza request.FILES para obtener el archivo que se ha cargado en un formulario. Se crea una nueva instancia de Document que se relaciona con el usuario actualmente autenticado y se guarda en la base de datos.
+
+
+
+
+Simon Velasquez
+y para guardar una lista indefinida de documentos ? donde el usuario los pueda descargar ?
+Para guardar una lista indefinida de documentos para un usuario y permitir que el usuario los descargue, puedes utilizar un modelo personalizado para almacenar los documentos y un enlace de descarga para que el usuario pueda acceder a ellos.
+
+Aquí hay un ejemplo de cómo hacerlo:
+
+javascript
+Copy code
+from django.db import models
+from django.contrib.auth.models import User
+
+class Document(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    document = models.FileField(upload_to='documents/')
+
+class DocumentDownload(models.Model):
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
+    download_link = models.CharField(max_length=100, unique=True)
+En este modelo, la clase Document es la misma que la del ejemplo anterior. La nueva clase DocumentDownload tiene una clave externa que se relaciona con una instancia de Document y un campo de texto download_link que se utilizará para generar un enlace de descarga.
+
+Para permitir que el usuario descargue los documentos, puedes crear una vista que muestre los enlaces de descarga de los documentos de ese usuario en particular. Aquí hay un ejemplo de cómo hacerlo:
+
+python
+Copy code
+from django.shortcuts import render
+from django.urls import reverse
+from django.http import HttpResponse
+
+def document_list(request):
+    documents = Document.objects.filter(user=request.user)
+    download_links = [reverse('download_document', args=[doc.id]) for doc in documents]
+    return render(request, 'document_list.html', {'documents': documents, 'download_links': download_links})
+
+def download_document(request, document_id):
+    document = Document.objects.get(id=document_id)
+    download_link = DocumentDownload.objects.get_or_create(document=document)[0].download_link
+    response = HttpResponse(document.document, content_type='application/force-download')
+    response['Content-Disposition'] = f'attachment; filename="{document.document.name}"'
+    response['X-Accel-Redirect'] = download_link
+    return response
+
+En este ejemplo, la vista document_list recupera todos los documentos del usuario actual y crea una lista de enlaces de descarga para cada documento utilizando la vista download_document.
+
+La vista download_document se utiliza para descargar un documento específico. Primero, recupera la instancia de Document correspondiente al document_id. Luego, crea o recupera la instancia de DocumentDownload para ese documento y obtiene el enlace de descarga. Finalmente, crea una respuesta HTTP que contiene el archivo y establece las cabeceras para indicar que el archivo debe ser descargado y usar el enlace de descarga para la descarga.
+
+Con esta implementación, puedes permitir que los usuarios guarden una lista indefinida de documentos y los descarguen en cualquier momento utilizando los enlaces de descarga generados.
+

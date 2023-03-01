@@ -13,10 +13,16 @@ urlpatterns = [
     path('accounts/logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
     path('accounts/email/<uidb64>/<token>/', views.EmailConfirmView, name='email_confirm'),
 
+    #Solicitar Cambio de Contraseña 
     path("accounts/password_reset/", views.PasswordResetRequestView, name="password_reset"),
+    
+    #llega solicitud y toca meter la nueva contraseña 
     path('accounts/reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name="password/password_reset_confirm.html"), name='password_reset_confirm'),    
     path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password/password_reset_done.html'), name='password_reset_done'),
     path('accounts/reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password/password_reset_complete.html'), name='password_reset_complete'),
+
+
+    path('accounts/profile', views.AccountFilesListView.as_view(), name='profile'),
 
     path('@', views.ComingSoonView, name='ComingSoon'),
 
