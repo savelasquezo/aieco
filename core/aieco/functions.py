@@ -12,9 +12,11 @@ def GlobalContext(request):
         rUser = request.user
 
         InfoUser = model.Account.objects.get(id=rUser.id)
+        UserFiles = model.AccountFiles.objects.filter(account=request.user.id)
 
         return {
-            'InfoUser':InfoUser,                                    
+            'InfoUser':InfoUser,
+                       
             }
         
     return {}   
