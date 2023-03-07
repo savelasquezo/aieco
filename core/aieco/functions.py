@@ -9,14 +9,7 @@ def GlobalContext(request):
     """
     
     if request.user.id is not None:
-        rUser = request.user
-
-        InfoUser = model.Account.objects.get(id=rUser.id)
-        UserFiles = model.AccountFiles.objects.filter(account=request.user.id)
-
-        return {
-            'InfoUser':InfoUser,
-                       
-            }
+        #Setting = model.Settings.objects.filter(IsActive=True).first()
+        return {'Setting':"Setting",}
         
     return {}   

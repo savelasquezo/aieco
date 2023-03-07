@@ -6,6 +6,9 @@ from django.utils import timezone
 
 from django.utils.html import format_html
 
+def LogoUploadTo(instance, filename):
+    return f"uploads/{instance.username}/logo/{filename}"
+
 def CustomUploadTo(instance, filename):
     return f"uploads/{instance.account.username}/{filename}"
 
@@ -24,11 +27,16 @@ class Account(AbstractUser):
     company = models.CharField(_("Organizacion"), max_length=128)
     nit = models.CharField(_("NIT"), max_length=128)
     phone = models.CharField(_("Telefono"), max_length=64)
+    
+    logo = models.ImageField(_("Logo"), upload_to=LogoUploadTo, max_length=32)
 
     country = models.CharField(_("Pais"), max_length=64)
     state = models.CharField(_("Departamento"), max_length=64)
     city = models.CharField(_("Municipio"), max_length=64)
     address = models.CharField(_("Direccion"), max_length=128)
+
+    def __str__(self):
+        return f"Empresa: {self.username}"
 
     class Meta:
         verbose_name = _("Usuario")

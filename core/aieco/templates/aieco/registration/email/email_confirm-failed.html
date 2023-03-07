@@ -10,6 +10,15 @@
   <title>AIECO</title>
 </head>
 <body>
-  <h1>EMAIL-CONFIRM-FAILED</h1>
+{% block block %}
+  <div>
+    <h2 class="pw-h2">ERROR</h2><br>
+    <h3 class="pw-h3">Lamentablemente no ha sido posible validar la direccion de correo electronico, la validación 
+      por correo electrónico ha fallado. Por favor, comuníquese con un administrador para resolver este problema.</h3>
+    <div>
+      <a href="{% url 'index' %}">Home</a>
+    </div>
+  </div>
+{% endblock %}
 </body>
 </html>

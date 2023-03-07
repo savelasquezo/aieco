@@ -7,8 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 
 from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import PasswordResetForm
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
@@ -20,7 +19,6 @@ from django.template.loader import render_to_string
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 
-from django.views.generic import ListView
 
 import aieco.models as model
 
@@ -28,19 +26,6 @@ from .tools import gToken
 
 class IndexView(TemplateView):
     template_name='aieco/index.html'
-    
-    def get(self, request, *args, **kwargs):
-
-        rUser = request.user
-
-        Account = model.Account.objects.get(id=rUser.id)
-
-        context = self.get_context_data(**kwargs)
-        context={
-            'Account':Account,
-        }
-
-        return self.render_to_response(context)
 
 class SingupView(UserPassesTestMixin, TemplateView):
     template_name='aieco/registration/singup.html'
@@ -125,7 +110,7 @@ class SingupView(UserPassesTestMixin, TemplateView):
         return redirect(reverse('Singup'))
 
 
-class UserLoginView(UserPassesTestMixin, LoginView):
+class iLoginView(UserPassesTestMixin, LoginView):
     template_name='aieco/registration/login.html'
 
     def test_func(self):
@@ -200,8 +185,22 @@ def ComingSoonView(request):
 
 ####### ADMIN ######
 
-class AccountFilesListView(ListView):
-    model = model.AccountFiles
-    template_name = 'aieco/admin/index.html'
-    context_object_name = 'files'
+class AccountView(LoginRequiredMixin, TemplateView):
+    template_name = 'aieco/admin/admin.html'
 
+class AccountInfoView(LoginRequiredMixin, TemplateView):
+    template_name = 'aieco/admin/profile.html'
+
+class AccountFilesView(LoginRequiredMixin, TemplateView):
+    template_name = 'aieco/admin/files.html'
+
+    def get(self, request, *args, **kwargs):
+
+        iFiles = model.AccountFiles.objects.filter(account=request.user)
+
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "iFiles":iFiles,
+        })
+
+        return self.render_to_response(context)

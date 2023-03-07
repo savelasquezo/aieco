@@ -10,6 +10,41 @@
   <title>AIECO</title>
 </head>
 <body>
-  <h1>SINGUP</h1>
+{% block block %}
+  <div>
+      <form action="{% url 'singup' %}" target="_self" method="POST" class='login-form'>
+        {% if messages %}
+        <div class="{{ message.tags }}">
+            <ul>
+            {% for message in messages %}
+                <h5 {% if message.tags %} class="{{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</h5>
+            {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <div style="height: 30px;"></div>
+        {% endif %}
+        {% csrf_token %}
+        <div>
+            <label class="lf--label" for="username"></label>
+            <input type="text" placeholder='Usuario' name="username" autofocus="" autocapitalize="none"  maxlength="64" required id="username">
+        </div>
+        <div>
+            <label class="lf--label" for="name"></label>
+            <input type="text" class='lf--input' placeholder='Nombre' name="name" autofocus="" autocapitalize="none"  maxlength="64" required id="name">
+        </div>
+        <div>
+            <label for="email"></label>
+            <input type="email" placeholder='Email' name="email" required id="email">
+        </div>
+        <div>
+            <label for="password"></label>
+            <input type="password" placeholder='Contraseña' name="password" required id="password" autocomplete="off">
+        </div>
+        <input type='submit' value='REGISTRAR'>
+        <a href="{% url 'login' %}">¿Eres Miembro? Inicia Sesión</a>
+      </form>
+  </div>
+{% endblock %}
 </body>
 </html>

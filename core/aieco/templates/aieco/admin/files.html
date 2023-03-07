@@ -20,11 +20,11 @@
       </tr>
     </thead>
     <tbody>
-      {% for file in files %}
+      {% for i in iFiles %}
         <tr>
-          <td>{{ file.id }}</td>
-          <td>{{ file.files.name }}</td>
-          <td><a href="{{ file.files.url }}" target="_blank">Descargar</a></td>
+          <td>{{ i.id }}</td>
+          <td>{{ i.filename }}</td>
+          <td><a href="{{ i.iFiles.url }}" target="_blank">Descargar</a></td>
         </tr>
       {% endfor %}
     </tbody>

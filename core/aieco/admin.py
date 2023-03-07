@@ -41,11 +41,12 @@ class AccountAdmin(admin.ModelAdmin):
             ("email","phone"),
             ("company","nit"),
             ("country","state"),
-            ("city","address")
+            ("city","address"),
+            "logo"
         )}
 
     fieldsets = (
-        ("INFROMACION", dInformation),)
+        ("INFORMACION", dInformation),)
 
     list_filter = ["date_joined","is_active"]
     search_fields = ['company']
