@@ -10,8 +10,9 @@
   <title>AIECO</title>
 </head>
 <body>
-  {% block block %}
+{% block block %}
   <div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <form target="_self" method="POST" class='login-form'>
       {% if messages %}
       <div class="{{ message.tags }}">
@@ -36,8 +37,17 @@
       <input type='submit' value='INGRESAR'>
       <a href="{% url 'singup' %}">¿No Eres Miembro? Regístrate</a>
       <a href="{% url 'password_reset' %}">¿Olvidaste la Contraseña?</a>
+      </div>
+      <div class="g-recaptcha" data-sitekey="6LeFQ-okAAAAAPh0_rYHVCnAVpBn1GHgWVdv6UFQ"></div>
     </form>
-  </div>
+    <script>
+      document.querySelector('#submit').addEventListener('click', function(event) {
+          if (!grecaptcha.getResponse()) {
+          event.preventDefault();
+          alert('¡Invalid recaptcha!');
+          }
+      });
+</script>
 {% endblock %}
 </body>
 </html>

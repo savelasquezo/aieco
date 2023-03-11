@@ -54,3 +54,32 @@ class AccountFiles(models.Model):
     class Meta:
         verbose_name = _("Archivo")
         verbose_name_plural = _("Documentacion")
+
+
+class Settings(models.Model):
+
+    sName = models.CharField(_("Configuracion"), max_length=64, blank=False, null=False, help_text="Organizacion/Empresa")
+    sURL = models.URLField(_("URL"), max_length=128, blank=True, null=True)
+
+    sIdx = models.SmallIntegerField(_("Indicativo"), blank=True, null=True, default=57)
+    sTel = models.CharField(_("Telefono"), max_length=64, blank=True, null=True)
+    
+    sEmail = models.EmailField(_("Correo"), max_length=254, blank=True, null=True)
+    
+    sTime1 = models.TimeField(_("Inicia"), auto_now=False, auto_now_add=False)
+    sTime2 = models.TimeField(_("Finaliza"), auto_now=False, auto_now_add=False)
+
+    sAddress = models.CharField(_("Address"), max_length=64, blank=True, null=True)
+    
+    sURL1 = models.URLField(_("Instagram"), max_length=128, blank=True, null=True)
+    sURL2 = models.URLField(_("Facebook"), max_length=128, blank=True, null=True)
+    sURL3 = models.URLField(_("Twitter"), max_length=128, blank=True, null=True)
+
+    IsActive = models.BooleanField(_("¿Activo?"), default=True, unique=True)
+
+    def __str__(self):
+        return f"Configuracion: {self.sName}"
+
+    class Meta:
+        verbose_name = _("Configuracion")
+        verbose_name_plural = _("Configuraciones")

@@ -1,6 +1,7 @@
 {% load static %}
 {% load humanize %}
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +31,7 @@
     <a href="{% url 'logout' %}">logout</a><br><span>-</span>
     <a href="{% url 'profile' %}"> perfil</a><br>
   </div>
-
+  {% block block %}
+  {% endblock %}
 </body>
 </html>

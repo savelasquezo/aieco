@@ -11,8 +11,9 @@
 </head>
 <body>
 {% block block %}
-  <div>
-      <form action="{% url 'singup' %}" target="_self" method="POST" class='login-form'>
+<div>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <form action="{% url 'singup' %}" target="_self" method="POST" class='login-form'>
         {% if messages %}
         <div class="{{ message.tags }}">
             <ul>
@@ -43,8 +44,20 @@
         </div>
         <input type='submit' value='REGISTRAR'>
         <a href="{% url 'login' %}">¿Eres Miembro? Inicia Sesión</a>
-      </form>
-  </div>
+    </div>
+    <div class="g-recaptcha" data-sitekey="6LeFQ-okAAAAAPh0_rYHVCnAVpBn1GHgWVdv6UFQ"></div>
+    </form>
+    <script>
+        document.querySelector('#submit').addEventListener('click', function(event) {
+            if (!grecaptcha.getResponse()) {
+            event.preventDefault();
+            alert('¡Invalid recaptcha!');
+            }
+        });
+</script>
 {% endblock %}
 </body>
 </html>
+
+
+
