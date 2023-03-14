@@ -30,7 +30,7 @@ class IndexView(TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        Settings = model.Settings.objects.filter(IsActive=True)
+        Settings = model.Settings.objects.filter(IsActive=True).first()
 
         context = super().get_context_data(**kwargs)
         context.update({
