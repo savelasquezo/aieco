@@ -10,6 +10,15 @@
   <title>AIECO</title>
 </head>
 <body>
-  <h1>EMAIL-CONFIRM</h1>
+{% block block %}
+  <div>
+    <h2 class="pw-h2">VERIFICADO</h2><br>
+    <h3 class="pw-h3">Felicidades, su validación por correo electrónico ha sido exitosa. 
+        Ahora puede disfrutar de todos los servicios disponibles. Gracias por su paciencia.</h3>
+    <div>
+      <a href="{% url 'index' %}">Home</a>
+    </div>
+  </div>
+{% endblock %}
 </body>
 </html>

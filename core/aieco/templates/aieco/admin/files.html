@@ -1,0 +1,26 @@
+{% extends 'aieco/admin/admin.html' %}
+
+{% load static %}
+{% load humanize %}
+
+{% block block %}
+  <h1>Lista de archivos</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre del archivo</th>
+        <th>Enlace de descarga</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in iFiles %}
+        <tr>
+          <td>{{ i.id }}</td>
+          <td>{{ i.filename }}</td>
+          <td><a href="{{ i.iFiles.url }}" target="_blank">Descargar</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
