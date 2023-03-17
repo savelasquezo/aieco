@@ -2,9 +2,9 @@ from .settings  import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["IP","dominio.com","www.dominio.com"]
+ALLOWED_HOSTS = ["5.183.9.247","aieco.com.co","www.aieco.com.co"]
 
-CSRF_TRUSTED_ORIGINS = ['https://dominio.com','https://www.dominio.com']
+CSRF_TRUSTED_ORIGINS = ['https://aieco.com.co','https://www.aieco.com.co']
 
 LOGGING = {
     'version': 1,
@@ -13,7 +13,7 @@ LOGGING = {
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
-            'filename': '/home/aieco/logs/django.log',
+            'filename': '/home/app/aieco/core/logs/django.log',
         },
     },
     'loggers': {
