@@ -3,478 +3,381 @@
 
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <!-- basic -->
-      <meta charset="utf-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <!-- mobile metas -->
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-      <!-- site metas -->
-      <title>AIECO</title>
-      <meta name="keywords" content="">
-      <meta name="description" content="">
-      <meta name="author" content="">
-      <!-- bootstrap css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'aieco/css/bootstrap.min.css' %}">
-      <!-- style css -->
-      <link rel="stylesheet" type="text/css" href="{% static 'aieco/css/style.css' %}">
-      <!-- Responsive-->
-      <link rel="stylesheet" href="{% static 'aieco/css/responsive.css' %}">
-      <!-- fevicon -->
-      <link rel="icon" href="{% static 'aieco/images/fevicon.png' %}" type="image/gif" />
-      <!-- Scrollbar Custom CSS -->
-      <link rel="stylesheet" href="{% static 'aieco/css/jquery.mCustomScrollbar.min.css' %}">
-      <!-- Tweaks for older IEs-->
-      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-      <!-- owl stylesheets --> 
-      <link rel="stylesheet" href="{% static 'aieco/css/owl.carousel.min.css' %}">
-      <link rel="stylesheet" href="{% static 'aieco/css/owl.theme.default.min.css' %}">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
-   </head>
-   <body>
-      <!--header section start -->
-      <div class="header_section">
-         <div class="container-fluid">
-            <div class="row">
-               <div class="col-md-3">
-                  <div class="logo"><a href="index.html"><img src="{% static 'aieco/images/logo.png' %}"></a></div>
-               </div>
-               <div class="col-md-9">
-                  <div class="menu_text">
-                     <ul>
-                        <div id="myNav" class="overlay">
-                           <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                           <div class="overlay-content">
-                              <a href="index.html">Home</a>
-                              <a href="blog.html">Blog</a>
-                              <a href="about.html">About</a>
-                              <a href="services.html">Services</a>
-                              <a href="client.html">Client</a>
-                              <a href="contact.html">Contact Us</a>
-                           </div>
-                        </div>
-                        <span class="navbar-toggler-icon"></span>
-                        <span onclick="openNav()"><img src="{% static 'aieco/images/toogle-icon.png' %}" class="toggle_menu"></span>
-                  </div>
-                  </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-         <!-- banner section start -->
-         <div class="banner_section">
-            <div class="container-fluid padding_0">
-               <div id="my_slider" class="carousel slide" data-ride="carousel">
-                  <div class="carousel-inner">
-                     <div class="carousel-item active">
-                        <div class="row">
-                           <div class="col-md-6">
-                              <div class="padding_left_0">
-                                 <h1 class="retailer_text">We Are Provide Professional Consulting</h1>
-                                 <p class="search_text">It is a long established fact that a reader will be distracted by the readable content of a page </p>
-                                 <div class="btn_main">
-                                    <div class="more_bt"><a href="#">Read More </a></div>
-                                    <div class="contact_bt"><a href="#">Get A Quote</a></div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div><img src="{% static 'aieco/images/img-1.png' %}" class="image_1"></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-md-6">
-                              <div class="padding_left_0">
-                                 <h1 class="retailer_text">We Are Provide Professional Consulting</h1>
-                                 <p class="search_text">It is a long established fact that a reader will be distracted by the readable content of a page </p>
-                                 <div class="btn_main">
-                                    <div class="more_bt"><a href="#">Read More </a></div>
-                                    <div class="contact_bt"><a href="#">Get A Quote</a></div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div><img src="{% static 'aieco/images/img-1.png' %}" class="image_1"></div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="carousel-item">
-                        <div class="row">
-                           <div class="col-md-6">
-                              <div class="padding_left_0">
-                                 <h1 class="retailer_text">We Are Provide Professional Consulting</h1>
-                                 <p class="search_text">It is a long established fact that a reader will be distracted by the readable content of a page </p>
-                                 <div class="btn_main">
-                                    <div class="more_bt"><a href="#">Read More </a></div>
-                                    <div class="contact_bt"><a href="#">Get A Quote</a></div>
-                                 </div>
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div><img src="{% static 'aieco/images/img-1.png' %}" class="image_1"></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <a class="carousel-control-prev" href="#my_slider" role="button" data-slide="prev">
-                  <i class="fa fa-left"><img src="{% static 'aieco/images/left-arrow.png' %}"></i>
-                  </a>
-                  <a class="carousel-control-next" href="#my_slider' %}" role="button" data-slide="next">
-                  <i class="fa fa-right"><img src="{% static 'aieco/images/right-arrow.png' %}"></i>
-                  </a>
-               </div>
-            </div>
-         </div>
-         <!-- banner section end -->
-      </div>
-      <!-- header section end -->
-      <div class="image_main">
-         <div class="container-fluid">
-            <div class="image_2">
-               <div class="image_0">
-                  <div><a href="#"><img src="{% static 'aieco/images/play-icon.png' %}" class="play_icon"></a></div>
-               </div>
-               <h2 class="see_text">SEE <span style="color: #470005;">Consulting</span> VIDEOS</h2>
-            </div>
-         </div>
-      </div>
-      <div class="advisor_section">
-         <div class="container">
-            <h1 class="what_text">What We Do</h1>
-         </div>
-      </div>
-      <div class="advisor_section_2 layout_padding">
-         <div class="container">
-            <div class="box_section">
-               <div class="row">
-                  <div class="col-lg-4 col-sm-12">
-                     <div class="box_main">
-                        <div class="image_3"></div>
-                        <h4 class="consultative_text">Consultative Training</h4>
-                        <p class="readable_text">Readable content of a page when looking at its layout. The point of It is a long established fact that a reader will be distracted by the readable</p>
-                     </div>
-                  </div>
-                  <div class="col-lg-4 col-sm-12">
-                     <div class="box_main active">
-                        <div class="image_4 active"></div>
-                        <h4 class="consultative_text active">Consultative Training</h4>
-                        <p class="readable_text active">Readable content of a page when looking at its layout. The point of It is a long established fact that a reader will be distracted by the readable</p>
-                     </div>
-                  </div>
-                  <div class="col-lg-4 col-sm-12">
-                     <div class="box_main">
-                        <div class="image_5"></div>
-                        <h4 class="consultative_text">Consultative Training</h4>
-                        <p class="readable_text">Readable content of a page when looking at its layout. The point of It is a long established fact that a reader will be distracted by the readable</p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- about section start -->
-      <div class="about_section layout_padding">
-         <div class="container">
-            <div class="row">
-               <div class="col-sm-6">
-                  <div><img src="{% static 'aieco/images/img-8.png' %}" class="image_8"></div>
-               </div>
-               <div class="col-sm-6">
-                  <h1 class="about_taital">About Us</h1>
-                  <p class="lorem_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis</p>
-                  <div class="more_bt"><a href="#">Read More </a></div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <!-- about section end -->
-      <!-- portfolio section start -->
-      <div class="portfolio_section layout_padding">
-         <div class="container">
-            <h1 class="what_text">Our Work Portfolio</h1>
-         </div>
-         <div class="container-fluid">
-            <div class="images_section">
-               <div class="row">
-                  <div class="col-sm-4 padding_0">
-                     <div class="container_1">
-                        <img src="{% static 'aieco/images/img-9.png' %}" alt="Avatar" class="image" style="width:100%">
-                        <div class="middle">
-                           <div class="text"><img src="{% static 'aieco/images/search-icon.png' %}"></div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-sm-4 padding_0">
-                     <div class="container_1">
-                        <img src="{% static 'aieco/images/img-10.png' %}" alt="Avatar" class="image" style="width:100%">
-                        <div class="middle">
-                           <div class="text"><img src="{% static 'aieco/images/search-icon.png' %}"></div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-sm-4 padding_0">
-                     <div class="container_1">
-                        <img src="{% static 'aieco/images/img-11.png' %}" alt="Avatar" class="image" style="width:100%">
-                        <div class="middle">
-                           <div class="text"><img src="{% static 'aieco/images/search-icon.png' %}"></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-sm-4 padding_0">
-                     <div class="container_1">
-                        <img src="{% static 'aieco/images/img-12.png' %}" alt="Avatar" class="image" style="width:100%">
-                        <div class="middle">
-                           <div class="text"><img src="{% static 'aieco/images/search-icon.png' %}"></div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-sm-4 padding_0">
-                     <div class="container_1">
-                        <img src="{% static 'aieco/images/img-13.png' %}" alt="Avatar" class="image" style="width:100%">
-                        <div class="middle">
-                           <div class="text"><img src="{% static 'aieco/images/search-icon.png' %}"></div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-sm-4 padding_0">
-                     <div class="container_1">
-                        <img src="{% static 'aieco/images/img-14.png' %}" alt="Avatar" class="image" style="width:100%">
-                        <div class="middle">
-                           <div class="text"><img src="{% static 'aieco/images/search-icon.png' %}"></div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="portfolio_section_2 layout_padding">
+
+<head>
+
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>AIECO</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+    <!-- Favicon
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'aieco/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'aieco/img/favicon.png' %}">
+
+    <!-- Stylesheets
+    ================================================== -->
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'aieco/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'aieco/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'aieco/css/responsive.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    {% if user.is_authenticated %}
+    <h1> HOLA autenticado </h1>
+    <h1> {{ user.country }} </h1>
+    {% else %}
+    <h1> HOLA sin autenticar </h1>
+    <h1> {{ Settings.sName }} </h1>
+    {% endif %}
+
+    <header id="masthead" class="site-header">
+        <nav id="primary-navigation" class="site-navigation">
             <div class="container">
-               <h1 class="best_taital">We Are Providing
-                  Best Business Service
-               </h1>
-               <p class="best_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-               <div class="get_bt"><a href="#">Get A Quote</a></div>
+
+                <div class="navbar-header">
+
+                    <a class="site-title"><span>Logo</span>AIECO</a>
+
+                </div><!-- /.navbar-header -->
+
+                <div class="collapse navbar-collapse" id="agency-navbar-collapse">
+
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li class="active"><a href="index.html" data-toggle="dropdown">Home</a></li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages<i
+                                    class="fa fa-caret-down hidden-xs" aria-hidden="true"></i></a>
+
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                <li><a href="portfolio.html">Portfolio</a></li>
+                                <li><a href="blog.html">Blog</a></li>
+                            </ul>
+
+                        </li>
+                        <li><a href="portfolio.html">Portfolio</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="ui-elements.html">UI Elements</a></li>
+
+                    </ul>
+
+                </div>
+
             </div>
-         </div>
-      </div>
-      <!-- portfolio section end -->
-      <!-- consulting section start -->
-      <div class="consulting_section layout_padding">
-         <div class="container">
-            <h1 class="what_text">Why Our Consulting?</h1>
-            <div class="consulting_section_2">
-               <div class="row">
-                  <div class="col-sm-6">
-                     <p class="lorem_text_1">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500sLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry</p>
-                     <div class="more_bt"><a href="#">Read More </a></div>
-                  </div>
-                  <div class="col-sm-6">
-                     <div class="image_8"><img src="{% static 'aieco/images/img-15.png' %}"></div>
-                  </div>
-               </div>
+        </nav><!-- /.site-navigation -->
+    </header><!-- /#mastheaed -->
+
+    <div id="hero" class="hero overlay">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Your story begins from here.</h1>
+                <p>Your clients on the internet. Learn how to receive them.</p>
+                <a href="#" class="btn btn-border">Learn more</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+    </div><!-- /.hero -->
+
+    <main id="main" class="site-main">
+
+        <section class="site-section section-features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h2>Responsive web design</h2>
+                        <p>Responsive Web design is the approach that suggests that design and development should
+                            respond to the user's behavior and environment based on screen size, platform and
+                            orientation. The practice consists of a mix of flexible grids and layouts, images and an
+                            intelligent use of CSS media queries</p>
+                    </div>
+                    <div class="col-sm-7 hidden-xs">
+                        <img src="{% static 'aieco/img/ipad-pro.png' %}" alt="">
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- consulting section end -->
-      <!-- client section start -->
-      <div class="client_section layout_padding">
-         <div class="container">
-            <h1 class="what_text">What Is Says Our Clients</h1>
-            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-               <ol class="carousel-indicators">
-                  <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                  <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-               </ol>
-               <div class="carousel-inner">
-                  <div class="carousel-item active">
-                     <div class="client_section_2 layout_padding">
-                        <div class="row">
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-16.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-17.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-18.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="client_section_2 layout_padding">
-                        <div class="row">
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-16.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-17.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-18.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="client_section_2 layout_padding">
-                        <div class="row">
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-16.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-17.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                           <div class="col-lg-4 col-sm-12">
-                              <p class="ipsum_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim </p>
-                              <div class="image_16"><img src="{% static 'aieco/images/img-18.png' %}"></div>
-                              <div class="adipiscing_text">Adipiscing<br>Magna</div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+        </section><!-- /.section-features -->
+
+        <section class="site-section section-services gray-bg text-center">
+            <div class="container">
+                <h2 class="heading-separator">Our Services</h2>
+                <p class="subheading-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/anchor.svg' %}" alt="">
+                            <h3 class="service-title">Branding</h3>
+                            <p class="service-info"> Learn why your brand is a valuable component when it comes to your
+                                marketing communication and why you don't want to be without one.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/bycicle.svg' %}" alt="">
+                            <h3 class="service-title">Design</h3>
+                            <p class="service-info">The strength of a design lies as much in the steps taken to create
+                                it as in the final result. </p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/paper-plane.svg' %}" alt="">
+                            <h3 class="service-title">Development</h3>
+                            <p class="service-info">Development is a way to make people aware of the services and/or
+                                products you are offering.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/photo.svg' %}" alt="">
+                            <h3 class="service-title">Photography</h3>
+                            <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/microphone.svg' %}" alt="">
+                            <h3 class="service-title">Support</h3>
+                            <p class="service-info">A support network can include a variety of forms of interaction with
+                                a range of people who can support you in different ways. </p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/rocket.svg' %}" alt="">
+                            <h3 class="service-title">Marketing</h3>
+                            <p class="service-info">Marketing is of vital importance to any business. It is the key
+                                process of researching, promoting and selling products or services to your target.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/basket.svg' %}" alt="">
+                            <h3 class="service-title">Ecommerce</h3>
+                            <p class="service-info">When customers are deciding on a purchase, they start by looking
+                                online.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/chemestry.svg' %}" alt="">
+                            <h3 class="service-title">Coding</h3>
+                            <p class="service-info">We use the best coding practices</p>
+                        </div><!-- /.service -->
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- client section end -->
-      <!-- contact section start -->
-      <div class="Contact_section layout_padding">
-         <div class="container">
-            <h1 class="categories_text">Rqueste a call back</h1>
-            <p class="dummy_text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered a</p>
-            <div class="email_box">
-               <div class="input_main">
-                  <div class="container">
-                     <form action="/action_page.php">
-                        <div class="form-group">
-                           <input type="text" class="email-bt" placeholder="Name" name="Name">
-                        </div>
-                        <div class="form-group">
-                           <input type="text" class="email-bt" placeholder="Phone Numbar" name="Phone Numbar">
-                        </div>
-                        <div class="form-group">
-                           <input type="text" class="email-bt" placeholder="Email Address" name="Email Address">
-                        </div>
-                        <div class="form-group">
-                           <textarea class="massage-bt" placeholder="Massage" rows="5" id="comment" name="Massage"></textarea>
-                        </div>
-                     </form>
-                  </div>
-                  <div class="send_bt"><a href="#">SEND</a></div>
-               </div>
+        </section><!-- /.section-services -->
+
+        <section class="site-section section-map-feature text-center">
+
+            <div class="container">
+                <h2>Responsive Web Design</h2>
+                <p>Web design is responsive design. Responsive web design is web design, done right.</p>
+                <a href="#" class="btn btn-fill">Learn More</a>
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="377" data-speed="2000">0</p>
+                            <h3>Cofee Cups</h3>
+                        </div><!-- /.counter-item -->
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="1204" data-speed="2000">0</p>
+                            <h3>Projects completed</h3>
+                        </div> <!-- /.counter-item -->
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="459" data-speed="1000">0</p>
+                            <h3>Happy Clients</h3>
+                        </div><!-- /.counter-item -->
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="675" data-speed="1000">0</p>
+                            <h3>Average Deal</h3>
+                        </div><!-- /.counter-item -->
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- contact section end -->
-      <!-- footer section start -->
-      <div class="footer_section layout_padding">
-         <div class="container">
+
+        </section><!-- /.section-map-feature -->
+
+        <section class="site-section section-portfolio">
+            <div class="container">
+                <div class="text-center">
+                    <h2 class="heading-separator">Latest Work</h2>
+                    <p class="subheading-text">This is some of our best work</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-1.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-2.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-3.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-4.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-5.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-6.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-1.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                    <div class="col-lg-3 col-md-4 col-xs-6">
+                        <div class="portfolio-item">
+                            <img src="{% static 'aieco/img/portfolio-2.jpg' %}" class="img-res" alt="">
+                            <h4 class="portfolio-item-title">Portfolio item</h4>
+                            <a href="portfolio-item.html"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                        </div><!-- /.portfolio-item -->
+                    </div>
+                </div>
+            </div>
+        </section><!-- /.section-portfolio -->
+
+        <section class="site-section section-newsletter text-center">
+            <div class="container">
+                <h2>Subscribe our newsletters</h2>
+                <form class="form-group newsletter-group">
+                    <input type="email" class="form-control" placeholder="Your e-mail" required>
+                    <button class="btn btn-green" type="button">Subscribe</button>
+                </form><!-- /.newsletter-group -->
+            </div>
+        </section><!-- /.section-newsletter -->
+
+    </main><!-- /#main -->
+
+    <footer id="colophon" class="site-footer">
+        <div class="container">
             <div class="row">
-               <div class="col-lg-3 col-sm-6">
-                  <h4 class="address_text">ADDRESS</h4>
-                  <p class="simply_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been  </p>
-               </div>
-               <div class="col-lg-3 col-sm-6">
-                  <h4 class="address_text">QUICK LINKS</h4>
-                  <div class="footer_menu_main">
-                     <div class="footer_menu">
-                        <ul>
-                           <li><a href="index.html.html">Home</a></li>
-                           <li><a href="blog.html">Blog</a></li>
-                           <li><a href="about.html">About</a></li>
-                           <li><a href="services.html">Services</a></li>
-                           <li><a href="contact.html">Contact Us</a></li>
-                        </ul>
-                     </div>
-                  </div>
-               </div>
-               <div class="col-lg-6 col-sm-12">
-                  <div class="newsletter_section">
-                     <div class="newsletter_left">
-                        <h4 class="address_text">Newsletter</h4>
-                     </div>
-                     <div class="newsletter_right">
-                        <div class="social_icon">
-                           <ul>
-                              <li><a href="#"><img src="{% static 'aieco/images/fb-icon.png' %}"></a></li>
-                              <li><a href="#"><img src="{% static 'aieco/images/twitter-icon.png' %}"></a></li>
-                              <li><a href="#"><img src="{% static 'aieco/images/instagram-icon.png' %}"></a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-                  <input type="text" class="mail_bt" placeholder="Enter Your Email" name="Enter Your Email">
-                  <input type="text" class="mail_bt" placeholder="Phone" name="Phone">
-                  <div class="subscribe_bt"><a href="#">Subscribe</a></div>
-               </div>
+                <div class="col-md-3 col-sm-4 col-xs-6">
+                    <a class="site-title"><span>Agency</span>Perfect</a>
+                    <p>We're a digital agency focused on creative and results-driven solutions.</p>
+                    <p>We measure our success by the results we drive for our clients.</p>
+                </div>
+                <div class="col-lg-offset-4 col-md-3 col-sm-4 col-md-offset-2 col-sm-offset-0 col-xs-6 ">
+                    <h3>Keep in touch</h3>
+                    <ul class="list-unstyled contact-links">
+                        <li><i class="fa fa-envelope" aria-hidden="true"></i><a
+                                href="mailto:info@agencyperfect.com">info@agencyperfect.com</a></li>
+                        <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+37400800000">+374 (00) 80 00 00
+                            </a></li>
+                        <li><i class="fa fa-fax" aria-hidden="true"></i><a href="+37400900000">+374 (00) 90 00 00</a>
+                        </li>
+                        <li><i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <p>20 Leo, Armenia</p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clearfix visible-xs"></div>
+                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+                    <h3>Featured links</h3>
+                    <ul class="list-unstyled">
+                        <li class="active"><a href="index.html">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="portfolio.html">Porfolio</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
             </div>
-         </div>
-      </div>
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
-         <div class="copyright_text">Copyright 2020 All Right Reserved By <a href="https://html.design">Free html  Templates</a></div>
-      </div>
-      <!-- copyright section end -->
-      <!-- Javascript files-->
-      <script src="{% static 'aieco/js/jquery.min.js' %}"></script>
-      <script src="{% static 'aieco/js/popper.min.js' %}"></script>
-      <script src="{% static 'aieco/js/bootstrap.bundle.min.js' %}"></script>
-      <script src="{% static 'aieco/js/jquery-3.0.0.min.js' %}"></script>
-      <script src="{% static 'aieco/js/plugin.js' %}"></script>
-      <!-- sidebar -->
-      <script src="{% static 'aieco/js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
-      <script src="{% static 'aieco/js/custom.js' %}"></script>
-      <!-- javascript --> 
-      <script src="{% static 'aieco/js/owl.carousel.js' %}"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-      <script>
-         $(document).ready(function(){
-         $(".fancybox").fancybox({
-         openEffect: "none",
-         closeEffect: "none"
-         });
-              
-         $(".zoom").hover(function(){
-              
-         $(this).addClass('transition');
-         }, function(){
-              
-         $(this).removeClass('transition');
-         });
-         });
-      </script> 
-      <script>
-         function openNav() {
-         document.getElementById("myNav").style.width = "100%";
-         }
-         function closeNav() {
-         document.getElementById("myNav").style.width = "0%";
-         }
-      </script>  
-   </body>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="social-links">
+                            <a class="twitter-bg" href="#"><i class="fa fa-twitter"></i></a>
+                            <a class="facebook-bg" href="#"><i class="fa fa-facebook"></i></a>
+                            <a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a>
+                            <a class="linkedin-bg" href="#"><i class="fa fa-linkedin"></i></a>
+                        </div><!-- /.social-links -->
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="text-right">
+                            <p>&copy; AgencyPerfect</p>
+                            <p>All Rights Reserved</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.copyright -->
+    </footer><!-- /#footer -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'aieco/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'aieco/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'aieco/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'aieco/js/jquery.countTo.min.js' %}"></script>
+    <script src="{% static 'aieco/js/jquery.shuffle.min.js' %}"></script>
+    <script src="{% static 'aieco/js/script.js' %}"></script>
+
+</body>
+
 </html>
