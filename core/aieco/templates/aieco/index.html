@@ -50,13 +50,13 @@
 
 <body>
 
-    {% if user %}
+    {% if user.is_authenticated %}
+    <h1> HOLA autenticado </h1>
     <h1> {{ user.country }} </h1>
     {% else %}
-    {% endif %}
-
-    <h1> HOLA </h1>
+    <h1> HOLA sin autenticar </h1>
     <h1> {{ Settings.sName }} </h1>
+    {% endif %}
 
     <header id="masthead" class="site-header">
         <nav id="primary-navigation" class="site-navigation">
@@ -64,7 +64,7 @@
 
                 <div class="navbar-header">
 
-                    <a class="site-title"><span>Agency</span>Perfect</a>
+                    <a class="site-title"><span>Logo</span>AIECO</a>
 
                 </div><!-- /.navbar-header -->
 

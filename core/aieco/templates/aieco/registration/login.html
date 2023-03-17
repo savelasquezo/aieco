@@ -2,52 +2,237 @@
 {% load humanize %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
-  <meta charset="UTF-8">
+
+  <!-- Basic Page Needs
+    ================================================== -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>AIECO</title>
+
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <meta name="keywords" content="">
+
+  <!-- Mobile Specific Metas
+    ================================================== -->
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,600,700" rel="stylesheet">
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <!-- Favicon
+    ================================================== -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'aieco/img/apple-touch-icon.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'aieco/img/favicon.png' %}">
+
+  <!-- Stylesheets
+    ================================================== -->
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'aieco/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'aieco/css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'aieco/css/responsive.css' %}" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
+
 <body>
-{% block block %}
-  <div>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <form target="_self" method="POST" class='login-form'>
-      {% if messages %}
-      <div class="{{ message.tags }}">
-          <ul>
-          {% for message in messages %}
-              <h5 {% if message.tags %} class="{{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</h5>
-          {% endfor %}
+  {% block block %}
+  <header id="masthead" class="site-header">
+    <nav id="primary-navigation" class="site-navigation">
+      <div class="container">
+
+        <div class="navbar-header">
+
+          <a class="site-title"><span>Logo</span>AIECO</a>
+
+        </div><!-- /.navbar-header -->
+
+        <div class="collapse navbar-collapse" id="agency-navbar-collapse">
+
+          <ul class="nav navbar-nav navbar-right">
+
+            <li class="active"><a href="index.html" data-toggle="dropdown">Home</a></li>
+            <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages<i
+                  class="fa fa-caret-down hidden-xs" aria-hidden="true"></i></a>
+
+              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li><a href="portfolio.html">Portfolio</a></li>
+                <li><a href="blog.html">Blog</a></li>
+              </ul>
+
+            </li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="ui-elements.html">UI Elements</a></li>
+
           </ul>
+
+        </div>
+
       </div>
-      {% else %}
-      <div style="height: 30px;"></div>
-      {% endif %}
-      {% csrf_token %}
-      <div>
-        <label for="username"></label>
-        <input type="text" class='lf--input' placeholder='Usuario' name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="64" required id="id_username">
+    </nav><!-- /.site-navigation -->
+  </header><!-- /#mastheaed -->
+
+  <main id="main" class="site-main">
+
+    <section class="site-section section-map-feature text-center">
+
+      <div class="container">
+        <h2>Login</h2>
+        <p>Por favor ingrese sus credenciales a continuación para iniciar sesión en el sistema.</p>
+        <br />
+        <form target="_self" method="POST" class="form-group newsletter-group">
+          {% if messages %}
+          <div class="{{ message.tags }}">
+            <ul>
+              {% for message in messages %}
+              <h5 {% if message.tags %} class="{{ message.tags }} {{ message.extra_tags }}" {% endif %}>{{ message }}
+              </h5>
+              {% endfor %}
+            </ul>
+          </div>
+          {% else %}
+          <div style="height: 30px;"></div>
+          {% endif %}
+          {% csrf_token %}
+          <input type="text" class="form-control" placeholder="Usuario" name="username" autofocus=""
+            autocapitalize="none" autocomplete="username" maxlength="64" required id="id_username">
+          <input type="password" class="form-control" placeholder="Contraseña" name="password"
+            autocomplete="current-password" required id="id_password">
+          <input type='submit' value='INGRESAR' class="btn btn-fill" style="margin-top: 150px;" />
+          <br /><br />
+          <a href="{% url 'singup' %}">¿No Eres Miembro? Regístrate</a>
+          &nbsp;<br />
+          <a href="{% url 'password_reset' %}">¿Olvidaste la Contraseña?</a>
+          <br /><br />
+          <div class="text-center">
+            <div class="g-recaptcha" data-sitekey="6LeFQ-okAAAAAPh0_rYHVCnAVpBn1GHgWVdv6UFQ"
+              style="display: inline-block;"></div>
+          </div>
+        </form>
+        <br />
+        <div class="row">
+          <div class="col-sm-3 col-xs-6">
+            <div class="counter-item">
+              <p class="counter" data-to="377" data-speed="2000">0</p>
+              <h3>Empresas satisfechas</h3>
+            </div><!-- /.counter-item -->
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <div class="counter-item">
+              <p class="counter" data-to="1204" data-speed="2000">0</p>
+              <h3>Certificaciones</h3>
+            </div> <!-- /.counter-item -->
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <div class="counter-item">
+              <p class="counter" data-to="459" data-speed="1000">0</p>
+              <h3>Usuarios</h3>
+            </div><!-- /.counter-item -->
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <div class="counter-item">
+              <p class="counter" data-to="675" data-speed="1000">0</p>
+              <h3>Solicitudes atendidas</h3>
+            </div><!-- /.counter-item -->
+          </div>
+        </div>
       </div>
-      <div>
-          <label for="password"></label>
-          <input type="password" placeholder='Contraseña' name="password" autocomplete="current-password" required id="id_password">
+
+    </section><!-- /.section-map-feature -->
+
+  </main><!-- /#main -->
+
+  <footer id="colophon" class="site-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-6">
+          <a class="site-title"><span>AIECO</span></a>
+          <p>We're a digital agency focused on creative and results-driven solutions.</p>
+          <p>We measure our success by the results we drive for our clients.</p>
+        </div>
+        <div class="col-lg-offset-4 col-md-3 col-sm-4 col-md-offset-2 col-sm-offset-0 col-xs-6 ">
+          <h3>Keep in touch</h3>
+          <ul class="list-unstyled contact-links">
+            <li><i class="fa fa-envelope" aria-hidden="true"></i><a
+                href="mailto:info@agencyperfect.com">info@agencyperfect.com</a></li>
+            <li><i class="fa fa-phone" aria-hidden="true"></i><a href="tel:+37400800000">+374 (00) 80 00 00 </a></li>
+            <li><i class="fa fa-fax" aria-hidden="true"></i><a href="+37400900000">+374 (00) 90 00 00</a></li>
+            <li><i class="fa fa-map-marker" aria-hidden="true"></i>
+              <p>20 Leo, Armenia</p>
+            </li>
+          </ul>
+        </div>
+        <div class="clearfix visible-xs"></div>
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
+          <h3>Featured links</h3>
+          <ul class="list-unstyled">
+            <li class="active"><a href="index.html">Home</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="portfolio.html">Porfolio</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
       </div>
-      <input type='submit' value='INGRESAR'>
-      <a href="{% url 'singup' %}">¿No Eres Miembro? Regístrate</a>
-      <a href="{% url 'password_reset' %}">¿Olvidaste la Contraseña?</a>
+    </div>
+    <div class="copyright">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="social-links">
+              <a class="twitter-bg" href="#"><i class="fa fa-twitter"></i></a>
+              <a class="facebook-bg" href="#"><i class="fa fa-facebook"></i></a>
+              <a class="pinterest" href="#"><i class="fa fa-pinterest"></i></a>
+              <a class="linkedin-bg" href="#"><i class="fa fa-linkedin"></i></a>
+            </div><!-- /.social-links -->
+          </div>
+          <div class="col-xs-4">
+            <div class="text-right">
+              <p>&copy; AgencyPerfect</p>
+              <p>All Rights Reserved</p>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="g-recaptcha" data-sitekey="6LeFQ-okAAAAAPh0_rYHVCnAVpBn1GHgWVdv6UFQ"></div>
-    </form>
-    <script>
-      document.querySelector('#submit').addEventListener('click', function(event) {
-          if (!grecaptcha.getResponse()) {
-          event.preventDefault();
-          alert('¡Invalid recaptcha!');
-          }
-      });
-</script>
-{% endblock %}
+    </div><!-- /.copyright -->
+  </footer><!-- /#footer -->
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="{% static 'aieco/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'aieco/js/bootstrap-select.min.js' %}"></script>
+  <script src="{% static 'aieco/js/jquery.slicknav.min.js' %}"></script>
+  <script src="{% static 'aieco/js/jquery.countTo.min.js' %}"></script>
+  <script src="{% static 'aieco/js/jquery.shuffle.min.js' %}"></script>
+  <script src="{% static 'aieco/js/script.js' %}"></script>
+
+  <script>
+    document.querySelector('#submit').addEventListener('click', function (event) {
+      if (!grecaptcha.getResponse()) {
+        event.preventDefault();
+        alert('¡Invalid recaptcha!');
+      }
+    });
+  </script>
+  {% endblock %}
 </body>
+
 </html>
