@@ -47,6 +47,10 @@ class AccountFiles(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     filename = models.CharField(_("Nombre"), max_length=128, blank=True)
     files = models.FileField(_("Archivos"),upload_to=CustomUploadTo, max_length=256, null=True, blank=True)
+    
+    file_date = models.DateTimeField(_("Inscrito"), default=timezone.now)
+    file_validity = models.DateTimeField(_("Vencimiento"), default=timezone.now)
+
 
     def __str__(self):
         return f"{self.filename}"
@@ -71,9 +75,9 @@ class Settings(models.Model):
 
     sAddress = models.CharField(_("Address"), max_length=64, blank=True, null=True)
     
-    sURL1 = models.URLField(_("Instagram"), max_length=128, blank=True, null=True)
+    sURL1 = models.URLField(_("Twitter"), max_length=128, blank=True, null=True)
     sURL2 = models.URLField(_("Facebook"), max_length=128, blank=True, null=True)
-    sURL3 = models.URLField(_("Twitter"), max_length=128, blank=True, null=True)
+    sURL3 = models.URLField(_("Linkedin"), max_length=128, blank=True, null=True)
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True, unique=True)
 
