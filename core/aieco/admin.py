@@ -28,9 +28,19 @@ class AuthAdminSite(admin.AdminSite):
 
         return app_list
 
+
+
 class FilesInline(admin.StackedInline):
     
     model = model.AccountFiles
+    dFile = {"fields": (
+            "filename",
+            "files",
+            ("file_date","file_validity")
+        )}
+
+    fieldsets = (
+        (" ", dFile),)
 
 class AccountAdmin(admin.ModelAdmin):
     

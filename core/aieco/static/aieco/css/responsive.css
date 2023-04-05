@@ -51,7 +51,7 @@
 
 	/* HEADER */
 	.site-header {
-		padding-top: 40px;
+		padding-top: 20px;
 	}
 
 	/* HERO */
@@ -124,7 +124,7 @@
 
 	/* FOOTER */
 	.site-footer {
-		padding-top: 55px;
+		padding-top: 0px;
 	}
 
 	.site-footer > .container {
