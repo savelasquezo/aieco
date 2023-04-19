@@ -30,16 +30,7 @@ from .tools import gToken
 class IndexView(TemplateView):
     template_name = 'aieco/index.html'
 
-    def get(self, request, *args, **kwargs):
 
-        Settings = model.Settings.objects.filter(IsActive=True).first()
-
-        context = super().get_context_data(**kwargs)
-        context.update({
-            "Settings": Settings,
-        })
-
-        return self.render_to_response(context)
 
 
 class SingupView(UserPassesTestMixin, TemplateView):
@@ -235,3 +226,22 @@ class AccountFilesView(LoginRequiredMixin, TemplateView):
         })
 
         return self.render_to_response(context)
+
+class LegalView(TemplateView):
+    template_name='aieco/pages/legal.html'
+
+    def get(self, request, *args, **kwargs):
+
+        rURL = self.kwargs.get('iURL')
+        InfoLink = model.Information.objects.get(iURL=rURL)
+
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'InfoLink': InfoLink,
+        })
+        return self.render_to_response(context)
+    
+class AboutUsView(TemplateView):
+    template_name='aieco/pages/about-us.html'
+
+    

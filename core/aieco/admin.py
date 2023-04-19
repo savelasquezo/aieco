@@ -1,7 +1,8 @@
-from django.contrib import admin
+from ckeditor.widgets import CKEditorWidget
 
-from django.contrib.auth.models import Group
+from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
+from django.db import models
 
 import aieco.models as model
 
@@ -16,7 +17,8 @@ class AuthAdminSite(admin.AdminSite):
         """
         ordering = {
             "Usuarios": 1,
-            "Configuraciones": 2,
+            "Links":2,
+            "Configuraciones": 3,
             }
         
         app_dict = self._build_app_dict(request, app_label)
@@ -72,6 +74,27 @@ class AccountAdmin(admin.ModelAdmin):
     search_fields = ['company']
 
 
+class InformationAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "id",
+        "iTitle",
+        "IsActive"
+        )
+
+    fConfig = {"fields": (
+        ("iTitle","IsActive"),
+        ("iURL","iFile"),
+        "iText"
+        )}
+
+    fieldsets = (
+        ("Configuracion", fConfig),
+        )
+
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorWidget()},}
+
 class SettingsAdmin(admin.ModelAdmin):
 
     list_display = (
@@ -97,6 +120,10 @@ class SettingsAdmin(admin.ModelAdmin):
         "sURL3",
         )}
 
+    fText = {"fields": (
+        "sText",
+        )}
+
     fTimes = {"fields": (
         ("sTime1","sTime2"),
         )}
@@ -104,9 +131,12 @@ class SettingsAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Configuracion", fConfig),
         ("Social", fSocial),
+        ("", fText),
         ("Horarios Atencion", fTimes)
         )
 
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorWidget()},}
 
 admin_site = AuthAdminSite()
 admin.site = admin_site
@@ -116,4 +146,5 @@ admin_site.site_header = "AIECO"
 
 
 admin.site.register(model.Account, AccountAdmin)
+admin.site.register(model.Information, InformationAdmin)
 admin.site.register(model.Settings, SettingsAdmin)
