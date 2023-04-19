@@ -15,6 +15,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
 from django.db.models.query_utils import Q
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
@@ -218,14 +219,26 @@ class AccountFilesView(LoginRequiredMixin, TemplateView):
 
     def get(self, request, *args, **kwargs):
 
-        iFiles = model.AccountFiles.objects.filter(account=request.user)
+        ITEMS = 5
+        MAXPAGES = 5
+
+        iFiles = model.AccountFiles.objects.filter(account=request.user).order_by("id")[:ITEMS*MAXPAGES]
+        iListFiles = Paginator(iFiles,ITEMS).get_page(request.GET.get('page'))
+
+        iFileFix = ITEMS - len(iFiles)%ITEMS
+
+        if iFileFix == ITEMS and len(iFiles) != 0:
+            iFileFix = 0
 
         context = super().get_context_data(**kwargs)
         context.update({
             "iFiles": iFiles,
+            'iListFiles':iListFiles,
+            'FixListPage':range(0,iFileFix)
         })
 
         return self.render_to_response(context)
+
 
 class LegalView(TemplateView):
     template_name='aieco/pages/legal.html'

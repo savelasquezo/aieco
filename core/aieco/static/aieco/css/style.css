@@ -569,10 +569,12 @@ select {
     border: none;
 }
 
+tr{font-size: small;height: 35px;max-height: 35px;}
 /* Pagination */
 .pagination {
-  margin: 0;
-  vertical-align: middle;
+    display: flex;
+    margin: auto;
+    justify-content: center;
 }
 
 .pagination > li > a {
@@ -923,7 +925,7 @@ html, body {
 ================================================== */
 /* site-section */
 .site-section {
-   padding: 100px 0 140px;
+   padding: 50px 0 140px;
 }
 
 .subheading-text {
@@ -1355,6 +1357,7 @@ a.linkedin-bg:hover {
     display: flex;
     flex-direction: column;
     width: 100%;
+    overflow: hidden;
 }
 .admin-links{
     display: flex;

@@ -4,23 +4,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <!-- Basic Page Needs
     ================================================== -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
     <title>AIECO</title>
-
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
-
     <!-- Mobile Specific Metas
     ================================================== -->
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
-
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
@@ -31,73 +26,42 @@
     ================================================== -->
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'aieco/img/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'aieco/img/favicon.png' %}">
-
     <!-- Stylesheets
     ================================================== -->
     <!-- Bootstrap core CSS -->
     <link href="{% static 'aieco/css/bootstrap.min.css' %}" rel="stylesheet">
-
     <!-- Custom styles for this template -->
     <link href="{% static 'aieco/css/style.css' %}" rel="stylesheet">
     <link href="{% static 'aieco/css/responsive.css' %}" rel="stylesheet">
-    
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 <body>
-    <div class="section-admin flex-row">
-      <div class="container-main site-grey">
-        <div>
-          <p>AIECO</p><hr>
-          <img src="{{user.logo.url}}" style="width: 150px; height: auto;" alt="">
-          <p>{{user.username}}</p>
-          <p>{{user.email}}</p><hr>
-        </div>
-        <div class="links-main">
-          <a href="{% url 'profile' %}"><p class="text-uppercase">Deshboard</p></a>
-          <a href="{% url 'files' %}"><p class="text-uppercase">Archivos</p></a>
-        </div>
+  <div class="section-admin flex-row">
+    <div class="container-main site-grey">
+      <div>
+        <p>AIECO</p><hr>
+        <img src="{{user.logo.url}}" style="width: 150px; height: auto;" alt="">
+        <p>{{user.username}}</p>
+        <p>{{user.email}}</p><hr>
       </div>
-      <div class="admin-block">
-        <div class="admin-links">
-          <a href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
-        </div>
-        <div>
-          <form action="{% url 'profile' %}" target="_self" method="POST" class='profile-form'>
-            {% if messages %}
-            <div class="{{ message.tags }}">
-                <ul>
-                {% for message in messages %}
-                    <h5 {% if message.tags %} class="{{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</h5>
-                {% endfor %}
-                </ul>
-            </div>
-            {% else %}
-            <div style="height: 30px;"></div>
-            {% endif %}
-            {% csrf_token %}
-                <img src="{{user.logo.url}}" alt="logo">
-                <input type="file"><br><br>
-                <label>Empresa</label><input type="text" placeholder="{{user.company}}" readonly>
-                <label>Nit</label><input type="text" placeholder="{{user.nit}}" readonly><br>
-                <br>
-                <label>Nombre</label><input type="text" placeholder="{{user.first_name}}">
-                <label>Apellido</label><input type="text" placeholder="{{user.last_name}}"><br>
-                <label>email</label><input type="text" placeholder="{{user.email}}">
-                <label>Telefono</label><input type="text" placeholder="{{user.phone}}"><br>
-                <label>country</label><input type="text" placeholder="{{user.country}}">
-                <label>state</label><input type="text" placeholder="{{user.state}}">
-                <label>city</label><input type="text" placeholder="{{user.city}}">
-                <label>address</label><input type="text" placeholder="{{user.address}}"><br>
-                <input type='submit' value='ACTUALIZAR'>
-          </form>
-        </div>
+      <div class="links-main">
+        <a href="{% url 'admin' %}"><p class="text-uppercase">Deshboard</p></a>
+        <a href="{% url 'files' %}"><p class="text-uppercase">Archivos</p></a>
       </div>
     </div>
+    <div class="admin-block">
+      <div class="admin-links">
+        <a href="{% url 'index' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
+      </div>
+      <div><!--SectionBlock Start-->
+
+      </div><!--SectionBlock End-->
+    </div>
+  </div>
 </body>
 </html>
