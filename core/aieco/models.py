@@ -60,6 +60,27 @@ class AccountFiles(models.Model):
         verbose_name_plural = _("Documentacion")
 
 
+class Information(models.Model):
+
+    iTitle = models.CharField(_("Titulo"), max_length=64, blank=False, null=False,
+        help_text="Titulo/Encabezado")
+    
+    iURL = models.CharField(_("URL"), max_length=32, blank=False, null=False, 
+        help_text="Local/Ref (SinEspacios-OnlyURL)")
+    
+    iFile = models.FileField(_("PDF"),upload_to="uploads/legal/", max_length=256, null=True, blank=True)
+    
+    iText = models.TextField(_("Texto"))
+    
+    IsActive = models.BooleanField(_("¿Activo?"), default=True)
+
+    def __str__(self):
+        return f"Informacion: {self.iTitle}"
+
+    class Meta:
+        verbose_name = _("Link")
+        verbose_name_plural = _("Links")
+
 class Settings(models.Model):
 
     sName = models.CharField(_("Configuracion"), max_length=64, blank=False, null=False, help_text="Organizacion/Empresa")
@@ -80,6 +101,8 @@ class Settings(models.Model):
     sURL3 = models.URLField(_("Linkedin"), max_length=128, blank=True, null=True)
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True, unique=True)
+
+    sText = models.TextField(_("Texto"),blank=True, null=True,help_text="Texto Informativo ¿Quienes Somos?")
 
     def __str__(self):
         return f"Configuracion: {self.sName}"

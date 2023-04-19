@@ -35,10 +35,6 @@
 		font-size: 36px;
 	}
 
-	p + p {
-		margin-top: 25px;
-	}
-
 	.accordion {
 		margin-top: 30px;
 	}
@@ -49,10 +45,10 @@
 		min-width: 170px;
 	}
 
-	/* HEADER */
+	/* HEADER 
 	.site-header {
 		padding-top: 20px;
-	}
+	}*/
 
 	/* HERO */
 	.hero-content {

@@ -6,6 +6,10 @@
 **/staticfiles/*
 staticfiles/
 
+# StaticfilesLinks
+**/uploads/*
+uploads/
+
 # Logs
 err.log
 out.log

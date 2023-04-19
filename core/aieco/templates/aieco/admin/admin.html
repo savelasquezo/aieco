@@ -1,37 +1,67 @@
 {% load static %}
 {% load humanize %}
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIECO</title>
-
-  <style>.container{display:flex;flex-direction:row}
-  </style>
-
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/fontawesome-all.min.css' %}" media="all">
+    <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/v4-shims.css' %}">
+    <!-- Favicon
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'aieco/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'aieco/img/favicon.png' %}">
+    <!-- Stylesheets
+    ================================================== -->
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'aieco/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{% static 'aieco/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'aieco/css/responsive.css' %}" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-  <div class="container">
-    <div>
+  <div class="section-admin flex-row">
+    <div class="container-main site-grey">
       <div>
-        <h1>AIECO</h1>
-        <img src="{{user.logo.url}}" alt="logo">
-        <h1>{{user.username}}</h1>
-        <h1>{{user.email}}</h1>
+        <p>AIECO</p><hr>
+        <img src="{{user.logo.url}}" style="width: 150px; height: auto;" alt="">
+        <p>{{user.username}}</p>
+        <p>{{user.email}}</p><hr>
       </div>
-      <div>
-        <a href="{% url 'profile' %}">Deshboard</a><br>
-        <a href="{% url 'files' %}">Archivos</a><br>
+      <div class="links-main">
+        <a href="{% url 'admin' %}"><p class="text-uppercase">Deshboard</p></a>
+        <a href="{% url 'files' %}"><p class="text-uppercase">Archivos</p></a>
       </div>
     </div>
-    <a href="{% url 'logout' %}">logout</a><br><span>-</span>
-    <a href="{% url 'profile' %}"> perfil</a><br>
+    <div class="admin-block">
+      <div class="admin-links">
+        <a href="{% url 'index' %}"><i class="fa-solid fa-house"></i></a>
+        <a href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
+      </div>
+      <div><!--SectionBlock Start-->
+
+      </div><!--SectionBlock End-->
+    </div>
   </div>
-  {% block block %}
-  {% endblock %}
 </body>
 </html>

@@ -9,7 +9,12 @@ def GlobalContext(request):
     """
     
     if request.user.id is not None:
-        #Setting = model.Settings.objects.filter(IsActive=True).first()
-        return {'Setting':"Setting",}
+        Setting = model.Settings.objects.filter(IsActive=True).first()
+        Info = model.Information.objects.filter(IsActive=True).order_by("id")
+
+        return {
+            'Setting':Setting,
+            "Info":Info,
+            }
         
-    return {}   
+    return {}  

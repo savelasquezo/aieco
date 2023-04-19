@@ -1,158 +1,239 @@
-{% extends 'aieco/base.html' %}
 {% load static %}
 {% load humanize %}
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
-{% block block %}
-<header id="masthead" class="site-header">
-    <nav id="primary-navigation" class="site-navigation">
-        <div class="navbar-header flex-row space-between">
-            <img src="{% static '/img/logo02.png' %}" alt="logo" class="logo" style="width: 150px; height: auto;">
-            <div style="text-align: right;">
-                {% if user.is_authenticated %}
-                <!-- <a href="{% url 'index' %}" class="btn btn-border">Home</a>  -->
+    <!-- Basic Page Needs
+    ================================================== -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>AIECO</title>
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keywords" content="">
+
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/fontawesome-all.min.css' %}" media="all">
+    <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/all.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/v4-shims.css' %}">
+    <!-- Favicon
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'aieco/img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'aieco/img/favicon.png' %}">
+
+    <!-- Stylesheets
+    ================================================== -->
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'aieco/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'aieco/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'aieco/css/responsive.css' %}" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+    <header id="masthead" class="site-header">
+        <nav id="primary-navigation" class="site-navigation">
+            <div class="navbar-header flex-row space-between">
+                <a href="{% url 'index' %}"><img src="{% static '/img/logo02.png' %}" alt="" id="logo" class="logo" style="width: 150px; height: auto;"></a>
                 <div class="links-head">
-                    <a href="{% url 'admin' %}">Administrar</a>
-                    <a href="{% url 'logout' %}">Salir</a>
+                    {% if user.is_authenticated %}
+                    <!-- <a href="{% url 'index' %}" class="btn btn-border">Home</a>  -->
+                        <a href="{% url 'admin' %}">Administrar</a>
+                        <a href="{% url 'logout' %}">Salir</a>
+                    {% else %}
+                    <!-- <a href="{% url 'index' %}" class="btn btn-border">Home</a>  -->
+                        <a href="{% url 'about-us' %}">¿Quienes Somos?</a>
+                        <a href="{% url 'login' %}">Ingresar</a>
+                    {% endif %}
                 </div>
-                {% else %}
-                <!-- <a href="{% url 'index' %}" class="btn btn-border">Home</a>  -->
-                <div class="links-head">
-                    <a href="{% url 'login' %}">Ingresar</a>
-                </div>
-                {% endif %}
+            </div><!-- /.navbar-header -->
+            <div class="collapse navbar-collapse" id="agency-navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="index.html" data-toggle="dropdown">Home</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages<i
+                        class="fa fa-caret-down hidden-xs" aria-hidden="true"></i></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            <li><a href="portfolio.html">Portfolio</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="ui-elements.html">UI Elements</a></li>
+                </ul>
             </div>
-        </div><!-- /.navbar-header -->
-        <div class="collapse navbar-collapse" id="agency-navbar-collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="index.html" data-toggle="dropdown">Home</a></li>
-                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Pages<i
-                    class="fa fa-caret-down hidden-xs" aria-hidden="true"></i></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                        <li><a href="portfolio.html">Portfolio</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                    </ul>
-                </li>
-                <li><a href="portfolio.html">Portfolio</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="ui-elements.html">UI Elements</a></li>
-            </ul>
-        </div>
-    </nav><!-- /.site-navigation -->
-</header><!-- /#mastheaed -->
-<div id="hero" class="hero overlay">
-    <div class="hero-content">
-        <div class="hero-text">
-            <img src="{% static '/img/logo03.png' %}" alt="logo" class="logo" style="width: 512px; height: auto;">
-            <p class="color-white" style="font-size: 20px;">Cuando alguien nos contacta, no lo vemos como un cliente, lo vemos como un aliado.
-                Por eso nuestra dedicación en cumplir con todas sus expectativas y no detenernos hasta que
-                quedan totalmente satisfechas. </p>
-            <a href="#" class="btn btn-gray">CONTACTAR</a>
-        </div><!-- /.hero-text -->
-    </div><!-- /.hero-content -->
-</div><!-- /.hero -->
-
-<main id="main" class="site-main">
-
-    <section class="padding-top80 padding-btm50 section-features">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-7 text-justify">
-                    <h2 class="text-uppercase">ASESORIAS INTEGRALES</h2>
-                    <p>Sabemos que el medio ambiente es muy importante, y lo es más sabiendo que dependiendo
-                        del cuidado que le demos, dependerá nuestra propia vida sobre la tierra, es por ello
-                        que como empresa.</p><br>
-                    <p>
-                        Queremos colaborarle a nuestros aliados en llevar a cabo las mejores
-                        prácticas para que no sólo estén al día con la normatividad vigente, sino para que al
-                        implementarlas, se den cuenta que están llevando a cabo un acto responsable y de
-                        empatía con el resto de la humanidad.
-                    </p>
-                </div>
-                <div class="col-sm-5 hidden-xs">
-                    <img src="{% static 'aieco/img/img-desc.png' %}" alt="img-desc" 
-                    style="width: 350px; height: auto; margin-top:-30px;">
-                </div>
-            </div>
-        </div>
-    </section><!-- /.section-features -->
-
-    <section class="padding-top80 padding-top80 section-services gray-bg text-center">
-        <div class="container">
-            <h2 class="heading-separator text-uppercase">Servicios</h2>
-            <p class="subheading-text slogan">Transformando negocios con sostenibilidad</p>
-            <div class="row">
-                <div class="col-md-3 col-xs-6">
-                    <div class="service">
-                        <img src="{% static 'aieco/img/anchor.svg' %}" alt="">
-                        <h3 class="service-title">Branding</h3>
-                        <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
-                    </div><!-- /.service -->
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="service">
-                        <img src="{% static 'aieco/img/bycicle.svg' %}" alt="">
-                        <h3 class="service-title">Design</h3>
-                        <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
-                    </div><!-- /.service -->
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="service">
-                        <img src="{% static 'aieco/img/paper-plane.svg' %}" alt="">
-                        <h3 class="service-title">Development</h3>
-                        <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
-                    </div><!-- /.service -->
-                </div>
-                <div class="col-md-3 col-xs-6">
-                    <div class="service">
-                        <img src="{% static 'aieco/img/photo.svg' %}" alt="">
-                        <h3 class="service-title">Photography</h3>
-                        <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
-                    </div><!-- /.service -->
+        </nav><!-- /.site-navigation -->
+    </header><!-- /#mastheaed -->
+    <div id="hero" class="hero overlay">
+        <div class="hero-content">
+            <div class="hero-text">
+                <img src="{% static '/img/logo03.png' %}" alt="logo" class="logo" style="width: 512px; height: auto;">
+                <p class="color-white" style="font-size: 20px;">Cuando alguien nos contacta, no lo vemos como un cliente, lo vemos como un aliado.
+                    Por eso nuestra dedicación en cumplir con todas sus expectativas y no detenernos hasta que
+                    quedan totalmente satisfechas. </p>
+                <a href="#" class="btn btn-gray">CONTACTAR</a>
+            </div><!-- /.hero-text -->
+        </div><!-- /.hero-content -->
+    </div><!-- /.hero -->
+    
+    <main id="main" class="site-main">
+    
+        <section class="padding-top80 padding-btm50 section-features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-7 text-justify">
+                        <h2 class="text-uppercase">ASESORIAS INTEGRALES</h2>
+                        <p>Sabemos que el medio ambiente es muy importante, y lo es más sabiendo que dependiendo
+                            del cuidado que le demos, dependerá nuestra propia vida sobre la tierra, es por ello
+                            que como empresa.</p><br>
+                        <p>
+                            Queremos colaborarle a nuestros aliados en llevar a cabo las mejores
+                            prácticas para que no sólo estén al día con la normatividad vigente, sino para que al
+                            implementarlas, se den cuenta que están llevando a cabo un acto responsable y de
+                            empatía con el resto de la humanidad.
+                        </p>
+                    </div>
+                    <div class="col-sm-5 hidden-xs">
+                        <img src="{% static 'aieco/img/img-desc.png' %}" alt="img-desc" 
+                        style="width: 350px; height: auto; margin-top:-30px;">
+                    </div>
                 </div>
             </div>
-        </div>
-    </section><!-- /.section-services -->
-
-    <section class="padding-btm80 padding-top80 section-map-feature text-center">
-
-        <div class="container">
-            <p class="slogan site-grey">¡Expertos en normativas ambientales!</p><br>
-            <h2 class="site-white">ASESORIAS INTEGRALES<br>ESPECIALIZADAS</h2>
-            <p></p>
-            <a href="#" class="btn btn-gray">CONTACTAR</a>
-            <p class="slogan site-grey">¡Especialistas en asesoría ambiental!<br>impulsando el progreso responsable de tu empresa</p><br>
-            <hr class="btmspace-50">
-            <div class="row text-uppercase color-white">
-                <div class="col-sm-3 col-xs-6">
-                    <div class="counter-item">
-                        <p class="counter" data-to="377" data-speed="2000">0</p>
-                        <h3>Empresas<br>Inscritas</h3>
-                    </div><!-- /.counter-item -->
+        </section><!-- /.section-features -->
+    
+        <section class="padding-top80 padding-top80 section-services gray-bg text-center">
+            <div class="container">
+                <h2 class="heading-separator text-uppercase">Servicios</h2>
+                <p class="subheading-text slogan">Transformando negocios con sostenibilidad</p>
+                <div class="row">
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/anchor.svg' %}" alt="">
+                            <h3 class="service-title">Branding</h3>
+                            <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/bycicle.svg' %}" alt="">
+                            <h3 class="service-title">Design</h3>
+                            <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/paper-plane.svg' %}" alt="">
+                            <h3 class="service-title">Development</h3>
+                            <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
+                        </div><!-- /.service -->
+                    </div>
+                    <div class="col-md-3 col-xs-6">
+                        <div class="service">
+                            <img src="{% static 'aieco/img/photo.svg' %}" alt="">
+                            <h3 class="service-title">Photography</h3>
+                            <p class="service-info">Photographs are the legacy you leave for generations to come.</p>
+                        </div><!-- /.service -->
+                    </div>
                 </div>
-                <div class="col-sm-3 col-xs-6">
-                    <div class="counter-item">
-                        <p class="counter" data-to="1204" data-speed="2000">0</p>
-                        <h3>Certificaciones<br>realizadas</h3>
-                    </div> <!-- /.counter-item -->
+            </div>
+        </section><!-- /.section-services -->
+        <section class="padding-btm80 padding-top80 section-map-feature text-center map01">
+            <div class="container">
+                <p class="slogan site-grey">¡Expertos en normativas ambientales!</p><br>
+                <h2 class="site-white">ASESORIAS INTEGRALES<br>ESPECIALIZADAS</h2>
+                <p></p>
+                <div class="social-links btmspace-30">
+                    <a class="twitter-bg"  href="{{Setting.sURL1}}"><i class="fab fa-twitter "></i></a>
+                    <a class="facebook-bg" href="{{Setting.sURL2}}"><i class="fab fa-facebook"></i></a>
+                    <a class="linkedin-bg" href="{{Setting.sURL3}}"><i class="fab fa-linkedin"></i></a>
                 </div>
-                <div class="col-sm-3 col-xs-6">
-                    <div class="counter-item">
-                        <p class="counter" data-to="459" data-speed="1000">0</p>
-                        <h3>Capacitaciones<br>Completadas</h3>
-                    </div><!-- /.counter-item -->
+                <p class="slogan site-grey">¡Especialistas en asesoría ambiental!<br>impulsando el progreso responsable de tu empresa</p><br>
+                <hr class="btmspace-50">
+                <div class="row text-uppercase color-white">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="377" data-speed="2000">0</p>
+                            <h3>Empresas<br>Inscritas</h3>
+                        </div><!-- /.counter-item -->
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="1204" data-speed="2000">0</p>
+                            <h3>Certificaciones<br>realizadas</h3>
+                        </div> <!-- /.counter-item -->
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="459" data-speed="1000">0</p>
+                            <h3>Capacitaciones<br>Completadas</h3>
+                        </div><!-- /.counter-item -->
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="counter-item">
+                            <p class="counter" data-to="675" data-speed="1000">0</p>
+                            <h3>Asociados<br>Vinculados</h3> 
+                        </div><!-- /.counter-item -->
+                    </div>
                 </div>
-                <div class="col-sm-3 col-xs-6">
-                    <div class="counter-item">
-                        <p class="counter" data-to="675" data-speed="1000">0</p>
-                        <h3>Asociados<br>Vinculados</h3> 
-                    </div><!-- /.counter-item -->
+            </div>
+    
+        </section><!-- /.section-map-feature -->
+    
+    </main><!-- /#main -->
+    <footer id="colophon" class="site-footer">
+        <div class="copyright">
+            <div class="container flex-row space-between">
+                <div>
+                    <div class="legal-links flex-column">
+                        {% for i in Info %}
+                            <a href="{% url 'legal' iURL=i.iURL %}"><p>{{i.iTitle}}</p></a>
+                        {% endfor %}
+                    </div>
+                </div>  
+                <div>
+                    <div class="contact-info">
+                        <div class="flex-row">
+                            <i class="fa fa-envelope site-white" aria-hidden="true"></i>
+                            <a href="mailto:{{Settings.sEmail}}?subject=Informacion&body=Aieco"><p>{{Settings.sEmail|default:'mail@aieco.com.co'}}</p></a>
+                        </div>
+                        <div class="flex-row">
+                            <i class="fa fa-phone site-white" aria-hidden="true"></i>
+                            <a href="https://wa.me/{{Setting.sIdx}}{{Setting.sTel}}"><p>+{{Settings.sIdx|default:'57'}} {{Settings.sTel|default:'3000000000'}}</p></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-    </section><!-- /.section-map-feature -->
-
-</main><!-- /#main -->
-{% endblock block %}
+    </footer>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'aieco/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'aieco/js/bootstrap-select.min.js' %}"></script>
+    <script src="{% static 'aieco/js/jquery.slicknav.min.js' %}"></script>
+    <script src="{% static 'aieco/js/jquery.countTo.min.js' %}"></script>
+    <script src="{% static 'aieco/js/jquery.shuffle.min.js' %}"></script>
+    <script src="{% static 'aieco/js/script.js' %}"></script>
+</body>
+</html>
