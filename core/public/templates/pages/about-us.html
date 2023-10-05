@@ -1,0 +1,56 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    {% include 'components/header.html' %}
+    <main>
+        <div class="flex flex-col px-32 py-12">
+            <div class="flex flex-row justify-between uppercase text-4xl font-Montserrat p-2">
+                <span>¿Quienes Somos?</span>            
+                {% if settings.file %}
+                <a href="{{ settings.file.url }}" target="_blank"><i class="fas fa-download text-gray-500 hover:text-blue-800 transition-colors duration-300"></i></a>
+                {% else %}
+                <i class="fa-solid fa-link-slash"></i>
+                {% endif %}
+            </div><hr>
+            <div class="text-justify text-sm py-4">{{settings.about_us|safe}}</div><br>
+            <div class="grid grid-cols-5 font-Montserrat p-2 items-center py-4">
+                <div class="col-span-1 text-5xl uppercase pr-4 tracking-tight">Mision</div>
+                <div class="col-span-4 text-sm text-justify">{{settings.mission|safe}}</div>
+            </div>
+            <div class="grid grid-cols-5 font-Montserrat p-2 items-center py-4">
+                <div class="col-span-1 text-5xl uppercase pr-4 tracking-normal">Vision</div>
+                <div class="col-span-4 text-sm text-justify">{{settings.vision|safe}}</div>
+            </div>
+            <hr>
+        </div>
+    </main>
+    {% include 'components/footer.html' %}
+    <!-- Javascrypts/Jquery ============================================================ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>

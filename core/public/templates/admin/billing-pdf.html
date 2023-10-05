@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC>
+<html>
+    <head>
+        <title>AIECO</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            main{
+                padding: 8px;
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <p>AIECO - {% now "Y-m-d" %} - Factura #{{user.billing_code|default:"A0-N/A"}}</p>
+            <p>{{user.company|default:"N/A"}} - NIT {{user.company_id|default:"--"}}</p>
+            <p>{{user.address|default:"--"}} - {{user.country|default:"--"}}</p>
+            <hr>
+            <p>Informacion Detallada</p>
+            <br>
+            <p>Aieco WEBSite Services: ${{user.payment|default:0}}</p>
+            <p>IVA $0</p>
+            <br>
+            <p>Total: ${{user.payment|default:0}}</p>
+            <br>
+            <hr>
+            <p>Fecha Vencimiento: ${{user.due_date|date:"Y-m-d"|default:"--"}}</p><br>
+            <br>
+            <p>Saldo Anterior: ${{user.debt|default:0}}</p>
+            <p>Facturacion: ${{user.payment|default:0}}</p>
+            <p>Abonos: ${{user.balance|default:0}} -- Ajustes: ${{user.discount|default:0}} -- Otros: ${{user.others|default:0}}</p>
+            <br>
+            <p>Total: ${{user.payment_total|default:0}}</p>
+            <hr><hr><hr>
+        </main>
+    </body>
+</html>

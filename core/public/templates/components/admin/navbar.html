@@ -1,0 +1,19 @@
+{% load static %}
+<nav class="grid grid-rows-4 grid-flow-col gap-4 w-1/6 pl-4">
+    <div class="row-span-1 flex flex-col items-center justify-center w-full -mt-10">
+      <img src="{% static '/images/logo0.png' %}" alt="logo" class="w-auto h-12">
+      <hr class="w-full h-0.5 "{% url 'support' %}"bg-gray-200 my-2 ml-4">
+    </div> 
+    <div class="relative row-span-3 ml-4 flex justify-center items-start -mt-10">
+      <div class="text-gray-700 w-full flex flex-col justify-center items-center gap-y-4 uppercase text-sm font-semibold text-center">
+        <a href="{% url 'admin' %}" class="bg-white w-full py-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300">Inicio</a>
+        <a href="{% url 'files' %}" class="bg-white w-full py-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300">Archivos</a>
+        <a href="{% url 'galery' %}" class="bg-white w-full py-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300">Multimedia</a>
+        <a href="{% url 'billing' %}" class="bg-white w-full py-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300">Facturacion</a>
+        <a href="{% url 'support' %}" class="bg-white w-full py-1 rounded-full shadow-md hover:bg-gray-200 transition duration-300">Soporte</a>
+      </div>
+      <div class="absolute bottom-10 uppercase text-sm font-semibold text-center">
+        <a href="{% url 'logout' %}" class="bg-white w-full py-1 px-14 rounded-full shadow-md hover:bg-gray-200 transition duration-300">Salir</a>
+      </div>
+    </div>
+</nav>

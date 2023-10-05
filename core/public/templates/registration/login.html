@@ -1,0 +1,73 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE =========================s -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets
+    ================================================== -->
+    <!-- Tailwind CSS -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <!-- GoogleRecaptcha CSS -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("login").submit();
+      }
+    </script>
+</head>
+<body>
+  <main>
+    <div class="flex items-center justify-center bg-background01 overlay h-screen">
+      <form target="_self" method="POST" id="login">
+        <div class="flex flex-col h-[80vh] justify-center bg-gray-100 rounded-lg items-center w-80 m-auto gap-4 border-double border-4 border-gray-400">
+          <a href="/" class="m-4"><img src="{% static '/images/logo0.png' %}" alt="" class="w-auto h-24"></a>
+          {% if messages %}
+          <div class="{{ message.tags }}">
+              <ul class="ul-messages text-xs items-center text-center">
+              {% for message in messages %}
+                  <p {% if message.tags %} class="font-bold {{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</p>
+              {% endfor %}
+              </ul>
+          </div>
+          {% else %}
+              <div style="height: 12px;"></div>
+          {% endif %}
+          {% csrf_token %}
+          <div class="relative">
+            <input type="username" name="username" placeholder="Usuario" autofocus="true" autocapitalize="none" autocomplete="off" maxlength="64" required class="pl-10 py-2 pr-4 border-none text-gray-800 focus:outline-none" />
+            <i class="fas fa-user absolute left-3 top-3 text-gray-600"></i>
+          </div>
+          <div class="relative">
+            <input type="password" name="password" placeholder="Contraseña" autofocus="true" autocomplete="off" required class="pl-10 py-2 pr-4 border-none text-gray-800" />
+            <i class="fas fa-lock absolute left-3 top-3 text-gray-600"></i>
+          </div>
+          <button class="g-recaptcha w-56 h-8 bg-green-700 hover:bg-green-800 transition-colors duration-300 rounded-sm text-white text-sm font-semibold cursor-pointer" data-sitekey="6Lf2NRAoAAAAACYWfoHhs2mNkCGPpuJIX4tgPq_5" data-callback="onSubmit">ENVIAR</button>
+          <a href="{% url 'password_reset' %}" class="font-semibold text-sm text-blue-600 hover:text-green-800 transition-colors duration-300">¿Olvidaste la Contraseña?</a>
+          <a href="{% url 'index' %}" class="text-red-600 -mt-4 font-semibold hover:text-red-800 transition-colors duration-300">< Volver al Inicio</a>
+        </div>
+      </form>
+    </div>
+  </main>
+  <!-- Javascrypts/Jquery ============================================================ -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>

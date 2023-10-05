@@ -1,0 +1,12 @@
+{% load static %}
+<header class="bg-white h-[10vh] flex flex-row justify-between items-center px-4 my-2 rounded-md shadow-inner bg-opacity-90 inset-shadow-xs">
+    <div class="flex flex-row gap-x-2 px-4 items-center">
+      <img src="{% if user.logo %}{{user.logo.url}}{% else %}{% static 'images/user.webp' %}{% endif %}" alt="" class="w-auto h-10">
+      <p class="uppercase font-semibold ml-4 text-gray-500">{{user.company}}</p>
+    </div>
+    <div class="flex flex-row text-lg gap-x-3 text-gray-500">
+      <a href=""><i class="fa-solid fa-gear"></i></a>
+      <a href=""><i class="fa-solid fa-bell"></i></a>
+      <a href="{% url 'logout' %}"><i class="fa-solid fa-power-off"></i></a>
+    </div>
+</header>

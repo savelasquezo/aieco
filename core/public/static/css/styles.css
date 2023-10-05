@@ -1,0 +1,81 @@
+@font-face {font-family: 'Animace';src: url('/static/fonts/Animeace.ttf') format('truetype');}
+@font-face {font-family: 'Roboto';src: url('/static/fonts/Roboto.ttf') format('truetype');}
+@font-face {font-family: 'Montserrat';src: url('/static/fonts/Roboto.ttf') format('truetype');}
+
+.font-Roboto {font-family: 'Roboto', sans-serif;}
+.font-Animace {font-family: 'Animace', sans-serif;}
+.font-Montserrat {font-family: 'Montserrat', sans-serif;}
+
+html body{width: 100%; height: 100%;}
+
+.bg-background01 {background: #071021 url(../images/background01.jpg) no-repeat center / cover;}
+.bg-background02 {background: #071021 url(../images/background02.jpg) no-repeat center / cover;}
+.bg-background03 {background: #071021 url(../images/background03.jpg) no-repeat center / cover;}
+.bg-background04 {background: #071021 url(../images/background04.jpg) no-repeat center / cover;}
+
+.success {color: rgb(21 128 61 / var(--tw-bg-opacity));}
+.error {color: rgb(220 38 38 / var(--tw-bg-opacity));;}
+
+.bg-gray-special {
+    --tw-bg-opacity: 1;
+    background-color: rgb(38 39 45 / var(--tw-bg-opacity));
+}
+
+.overlay {
+    color: #FFFFFF;
+    background-color: inherit;
+    position: relative;
+    z-index: 1;
+}
+.overlay::after {
+    color: inherit;
+    background-color: rgba(0,0,0,0.8);
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    z-index: -1;
+}
+
+.separator:after {
+    content: "";
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    width: 60%;
+    margin: 0 auto;
+    background-color: #267df4;
+}
+
+
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+    -webkit-tap-highlight-color:none;border:none;outline:none;        
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dlog::backdrop {background: rgba(0, 0, 0, 0.100);}

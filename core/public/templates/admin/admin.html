@@ -1,0 +1,87 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+  <main class='flex flex-row h-screen bg-gray-100 py-4'>
+    {% include 'components/admin/navbar.html' %}
+    <section class="flex flex-col h-full w-full px-10">
+      {% include 'components/admin/header.html' %}
+      <div class="bg-white h-[80vh] px-8 py-4 grid grid-cols-5 rounded-md shadow-inner bg-opacity-90 space-x-4">
+        {% if arrayNotifications %}
+        <div class="col-span-2 gap-y-2 p-3 flex flex-col items-center justify-start w-full h-full bg-gray-100 rounded-md shadow-inner overflow-scroll overflow-x-hidden">
+          {% for i in arrayNotifications %}
+          <div id="dlog-notify-{{ forloop.counter }}" data-subject="{{ i.sender }}" data-subject="{{ i.subject }}" data-message="{{ i.message }}"
+            class="{% if i.read %}bg-gray-200{% else %}bg-green-200{% endif %} w-full h-14 rounded-md flex flex-row justify-between py-2 px-4 cursor-pointer hover:shadow-inner hover:bg-gray-300 transition duration-300">
+            <div class="flex flex-col justify-between">
+              <p class="text-xs uppercase font-semibold">{{ i.sender }}</p>
+              <p class="text-[10px] font-semibold uppercase">{{ i.subject }}</p>
+            </div>
+            <p class="text-sm font-thin">{{ i.date|date:'d M' }}</p>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="col-span-2 flex items-start justify-center h-full bg-gray-100 rounded-md shadow-inner bg-opacity-95 p-4">
+          <p class="font-thin text-sm mt-6">No hay notificaciones nuevas</p>
+        </div>
+        {% endif %}
+        {% if arrayAnnouncements %}
+        <div class="col-span-3 gap-y-2 p-3 flex flex-col items-center justify-start w-full h-full bg-gray-100 rounded-md shadow-inner overflow-scroll overflow-x-hidden">
+          {% for i in arrayAnnouncements %}
+          <div class="relative w-full h-28 rounded-md p-4 hover:shadow-inner hover:bg-opacity-80 transition-all duration-300">
+              <div class="bg-gray-200 absolute inset-0 rounded-md"></div>
+              <div class="relative z-10 flex flex-row justify-between items-center">
+                <p class="text-sm font-semibold uppercase">{{i.title}}</p>
+                <p class="text-xs font-semibold">{{i.date|date:'d M Y'|default:"--"}}</p>
+              </div>
+              <p class="z-10 w-full mt-2 text-sm h-10 text-ellipsis overflow-hidden relative">{{i.description}}</p>
+          </div>                
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="col-span-3 flex flex-col gap-y-2 items-center justify-start h-full bg-gray-100 rounded-md shadow-inner bg-opacity-95 p-4">
+          <p class="font-thin text-sm mt-6">No hay anuncios nuevos</p>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+    <dialog id="dialog-container">
+      <form action="">
+        <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div class="relative bg-white p-4 rounded shadow-md w-2/3 h-[75vh]" id="dialog">
+              <span class="text-xl font-semibold mb-4"></span>
+              <p class="mb-4"></p>
+              <button class="text-red-500 hover:text-red-700 absolute bottom-4 right-4">Eliminar</button>
+              <button class="text-red-500 hover:text-red-700 absolute top-4 right-4" id="close-button"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+    <script src="{% static 'js/dialog.js' %}"></script>
+  </main>
+</body>
+</html>

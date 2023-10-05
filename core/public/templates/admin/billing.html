@@ -1,0 +1,130 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+  <main class='flex flex-row h-screen bg-gray-100 py-4'>
+    {% include 'components/admin/navbar.html' %}
+    <section class="flex flex-col h-full w-full px-10">
+      {% include 'components/admin/header.html' %}
+      <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
+        <div class="relative flex flex-col gap-y-2 items-start justify-start h-full bg-gray-100 rounded-sm p-8 pb-2 border-double">
+          <div class="w-full flex flex-row items-center justify-between">
+            <img src="{% static '/images/logo0.png' %}" alt="logo" class="w-auto h-12">
+            <div class="flex flex-row gap-x-2 uppercase text-xs">
+              <span><a href="{% url 'invoice' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Descargar</a></span>   
+              <span><a href="{% url 'history' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Mostrar Historial</a></span>   
+            </div>
+          </div>
+          <div class="w-full flex flex-col my-4 justify-start">
+            <div class="border border-gray-400 text-xs text-gray-600">
+              <div class="grid grid-cols-10 items-center justify-center">
+                <p class="col-span-7 border-b border-gray-400 px-2 text-left font-semibold">{{user.company|default:"--"}}</p>
+                <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Fecha</p>
+                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{user.payment_date|date:'d M'|default:"--"}}</p>
+              </div>
+              <div class="grid grid-cols-10 items-center justify-center">
+                <p class="col-span-7 border-b border-gray-400 px-2 text-left font-semibold">NIT: {{user.nit|default:"--"}}</p>
+                <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Identificacion</p>
+                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{user.company_id|default:"--"}}</p>
+              </div>
+              <div class="grid grid-cols-10 items-center justify-center">
+                <p class="col-span-7 border-b border-gray-400 px-2 text-left font-semibold">{{user.country|default:"--"}} / {{user.city|default:"--"}}</p>
+                <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Numeral</p>
+                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{user.billing_code|default:"--"}}</p>
+              </div>
+              <div class="grid grid-cols-10 items-center justify-center">
+                <p class="col-span-7 border-gray-400 px-2 text-left font-semibold">{{user.address|default:"--"}}</p>
+                <p class="col-span-1 border-gray-400 px-2 border-l text-left font-thin">Vencimiento</p>
+                <p class="col-span-2 border-gray-400 px-2 border-l text-center">{{user.due_date|date:'d M'|default:"--"}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-col justify-start">
+            <div class="border border-gray-400 text-xs">
+              <div class="flex flex-row items-center col-span-2 border-b px-2 border-gray-400">
+                <span class="font-semibold">Fecha de Facturacion:</span><p class="ml-4">{{user.last_due_date|date:'d M Y'|default:"--"}} -> {{user.payment_date|date:'d M Y'|default:"--"}}</p>
+              </div>
+              <div class="grid grid-cols-7 items-center justify-center text-center uppercase font-semibold">
+                <p class="col-span-1 border-b py-1 bg-green-800 text-white px-2 border-gray-400">Saldo</p>
+                <p class="col-span-1 border-b py-1 bg-green-800 text-white px-2 border-gray-400 border-l">Facturacion</p>
+                <p class="col-span-1 border-b py-1 bg-green-800 text-white px-2 border-gray-400 border-l">Abonos</p>
+                <p class="col-span-1 border-b py-1 bg-green-800 text-white px-2 border-gray-400 border-l">Ajustes</p>
+                <p class="col-span-1 border-b py-1 bg-green-800 text-white px-2 border-gray-400 border-l">Otros</p>
+                <p class="col-span-2 border-b py-1 bg-green-800 text-white px-2 border-gray-400 border-l">Total</p>
+              </div>
+              <div class="grid grid-cols-7 items-center justify-center text-center">
+                <p class="col-span-1 px-2 border-gray-400">{{user.debt|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{user.payment|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{user.balance|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{user.discount|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{user.others|default:0}}</p>
+                <p class="col-span-2 border-l px-2 border-gray-400">{{user.payment_total|default:0}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="w-full flex flex-col items-end justify-start">
+            <div class="w-[43%] text-xs">
+              <div class="grid grid-cols-3 items-center justify-center uppercase font-semibold">
+                <p class="col-span-1 border-b py-1 bg-green-800 text-white border-l px-2 border-gray-400">Detalles</p>
+                <p class="col-span-2 border-b py-1 bg-green-800 text-white border-l px-2 border-gray-400 text-right">Subtotal</p>
+              </div>
+              <div class="grid grid-cols-3 items-center justify-center">
+                <p class="col-span-1 border-b border-l px-2 border-gray-400">Website Aieco</p>
+                <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
+                  <span>$</span><p>200.000</p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 items-center justify-center">
+                <p class="col-span-1 border-b border-l px-2 border-gray-400">IVA</p>
+                <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
+                  <span>$</span><p>0</p>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 items-center justify-center">
+                <span class="col-span-1"></span>
+                <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
+                  <span>$</span><p>200.000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute bottom-10 right-8 w-full flex flex-col items-end justify-end">
+            <div class="w-[26%] flex flex-col border border-gray-400 text-xs">
+              <div class="items-center justify-center">
+                <p class="col-span-1 py-1 bg-green-800 text-white px-2 border-gray-400 uppercase text-right font-semibold">Total</p>
+              </div>
+              <div class="flex flex-row items-center justify-between pl-2">
+                <span>$</span><p class="col-span-1 py-1 text-gray-600 font-semibold px-2 border-gray-400 text-right">200.000</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

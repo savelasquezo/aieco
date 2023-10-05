@@ -1,0 +1,108 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+  <main class='flex flex-row h-screen bg-gray-100 py-4'>
+    {% include 'components/admin/navbar.html' %}
+    <section class="flex flex-col h-full w-full px-10">
+      {% include 'components/admin/header.html' %}
+      <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
+        <div class="flex flex-col p-3 items-center justify-start w-full h-full bg-gray-100 rounded-md shadow-inner overflow-scroll overflow-x-hidden">
+            <div class="relative rounded-t-md w-full h-full">
+              <table class="min-w-full text-center text-sm font-light">
+                <thead
+                  class="border-b bg-green-800 font-medium text-white">
+                  <tr class="uppercase text-xs">
+                    <th scope="col" class=" px-6 py-4">Codigo</th>
+                    <th scope="col" class=" px-6 py-4">Metodo</th>
+                    <th scope="col" class=" px-6 py-4">Valor</th>
+                    <th scope="col" class=" px-6 py-4">Fecha</th>
+                    <th scope="col" class=" px-6 py-4">Voucher</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in iListFiles %}
+                  <tr class="border-b">
+                    <td class="whitespace-nowrap px-6 py-2 font-medium">{{i.invoice}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">{{i.method}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">{{i.payment|intcomma}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">{{i.date|date:'d M Y'}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">{{i.voucher}}</td>
+                  </tr>
+                  {% endfor %}
+                  {% if not iListFiles.has_next %}
+                    {% for i in FixListPage %}
+                    <tr class="border-b">
+                      {% for _ in '12345' %}
+                      <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}
+                  {% elif not iListFiles.has_other_pages %}
+                    {% for i in FixListPage %}
+                    <tr class="border-b">
+                      {% for _ in '12345' %}
+                      <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
+                      {% endfor %}
+                    </tr>
+                    {% endfor %}           
+                  {% endif %}
+                </tbody>
+              </table>
+              <nav class="absolute bottom-0 flex items-center justify-center w-full text-center my-4">
+                <ul>
+                    {% if iListFiles.has_previous %}
+                    <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg" 
+                        href="?page={{ iListFiles.previous_page_number }}"><i class="fa-solid fa-angles-left text-sm text-gray-700"></i></a></li>
+                    {% else %}
+                    <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
+                        href=""><i class="fa-solid fa-angles-left text-sm text-gray-400 cursor-not-allowed"></i></a></li>
+                    {% endif %}
+                    {% for page in iListFiles.paginator.page_range %}
+                    {% if page == iListFiles.number %}
+                    <li class="bg-gray-300 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
+                        href="">{{ page }}</a></li>
+                    {% else %}
+                    <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg"
+                        href="?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if iListFiles.has_next %}
+                    <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg"
+                        href="?page={{ iListFiles.next_page_number }}"><i class="fa-solid fa-angles-right text-sm text-gray-700"></i></a></li>
+                    {% else %}
+                    <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
+                        href=""><i class="fa-solid fa-angles-right text-sm text-gray-400 cursor-not-allowed"></i></a></li>
+                    {% endif %}
+                </ul>
+              </nav>
+            </div>
+        </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+  <main class='flex flex-row h-screen bg-gray-100 py-4'>
+    {% include 'components/admin/navbar.html' %}
+    <section class="flex flex-col h-full w-full px-10">
+      {% include 'components/admin/header.html' %}
+      <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
+        <div class="flex flex-col gap-y-2 items-center justify-start h-full bg-gray-100 rounded-md shadow-inner bg-opacity-95 p-4">
+          {% if messages %}
+            <div class="{{ message.tags }} flex flex-col items-center justify-center h-full w-full">
+                <ul class="ul-messages text-xs items-center text-center">
+                {% for message in messages %}
+                  <p {% if message.tags %} class="text-2xl font-bold {{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+                </ul>
+                <a href="{% url 'support' %}" class="w-1/4 px-4 py-2 mt-4 bg-blue-700 text-white text-center font-semibold rounded hover:bg-blue-800 focus:outline-none focus:bg-blue-800 uppercase transition-colors duration-300">Volver</a>
+            </div>
+          {% else %}
+            <form method="post" class="container flex flex-col justify-center items-start mx-auto p-4 gap-y-6">
+              {% csrf_token %}
+              <div class="h-12 w-full flex flex-row items-center justify-center gap-x-4 ">
+                <div class="w-1/2 h-full flex flex-col">
+                  <label for="{{ form.first_name.id_for_label }}" class="tracking-wide text-gray-600 font-thin text-sm uppercase">Nombre</label>
+                  <input type="text" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.name }}" class="appearance-none block w-full text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:ring-inset focus:outline-none" required>
+                </div>
+                <div class="w-1/2 h-full flex flex-col">
+                  <label for="{{ form.last_name.id_for_label }}" class="tracking-wide text-gray-600 font-thin text-sm uppercase">Apellido</label>
+                  <input type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.name }}" class="appearance-none block w-full text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight focus:ring-inset focus:outline-none" required>
+                </div>
+              </div>
+              <div class="h-12 w-full flex flex-col items-start justify-start">
+                <label for="{{ form.type.id_for_label }}" class="tracking-wide text-gray-600 font-thin text-xs uppercase">Seleccione una Categoria</label>
+                <select id="{{ form.type.id_for_label }}" name="{{ form.type.name }}" class="block w-full px-3 py-2 mt-1 bg-white border border-gray-300 rounded-md shadow-sm focus:ring-inset focus:outline-none" required>
+                  {% for choice in form.type.field.choices %}
+                      <option value="{{ choice.0 }}" {% if choice.0 == form.type.value %}selected{% endif %}>{{ choice.1 }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="h-48 w-full flex flex-col items-center justify-center">
+                <textarea id="{{ form.messages.id_for_label }}" name="{{ form.messages.name }}" class="block w-full h-full px-3 py-2 mt-1 text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none focus:border-blue-500 resize-none" required></textarea>
+              </div>
+              <div class="flex items-center justify-center w-full">
+                <button class="w-full px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 focus:outline-none focus:bg-blue-800 uppercase transition-colors duration-300" type="submit" >Enviar</button>
+              </div>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -37,6 +37,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+TAILWIND_APP_NAME = 'theme'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Application definition
 
@@ -50,7 +55,10 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'ckeditor',
     'captcha',
-    'aieco.apps.AiecoConfig',
+    'tailwind',
+    'theme',
+    'django_browser_reload',
+    'public.apps.PublicConfig',
 ]
 
 MIDDLEWARE = [
@@ -61,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -76,7 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'aieco.functions.GlobalContext',
+                'public.functions.GlobalContext',
             ],
         },
     },
@@ -122,16 +131,16 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
 USE_TZ = True
 
 # URLs -->LOGIN/LOGOUT
-LOGIN_REDIRECT_URL = "/accounts/admin/"
+LOGIN_REDIRECT_URL = "/accounts/admin"
 LOGOUT_REDIRECT_URL = "/"
 
 # Static files (CSS, JavaScript, Images)
@@ -140,7 +149,7 @@ LOGOUT_REDIRECT_URL = "/"
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles/')
 
-STATICFILES_DIRS = [BASE_DIR/"aieco/static"]
+STATICFILES_DIRS = [BASE_DIR/"public/static"]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -148,7 +157,7 @@ STATICFILES_DIRS = [BASE_DIR/"aieco/static"]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # UserModel -->Conif
-AUTH_USER_MODEL = 'aieco.Account'
+AUTH_USER_MODEL = 'public.Account'
 USERNAME_FIELD = 'Username'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, '')

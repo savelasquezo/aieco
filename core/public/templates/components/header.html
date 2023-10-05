@@ -1,0 +1,16 @@
+{% load static %}
+<header>
+    <nav class="flex flex-row justify-between items-center p-8 h-[5vh] w-full bg-gray-special">
+        <a href="{% url 'index' %}"><img src="{% static '/images/logo1.png' %}" alt="" class="w-auto h-8"></a>
+        <div class="flex flex-row gap-x-4 text-sm uppercase text-gray-400 ">
+            {% if user.is_authenticated %}
+                <a href="{% url 'admin' %}" class="hover:text-lime-400 transition-colors duration-300">Administrar</a>
+                <a href="{% url 'about-us' %}" class="hover:text-lime-400 transition-colors duration-300">¿Quienes Somos?</a>
+                <a href="{% url 'logout' %}" class="hover:text-lime-400 transition-colors duration-300">Salir</a>
+            {% else %}
+                <a href="{% url 'about-us' %}" class="hover:text-lime-400 transition-colors duration-300">¿Quienes Somos?</a>
+                <a href="{% url 'login' %}" class="hover:text-lime-400 transition-colors duration-300">Ingresar</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>

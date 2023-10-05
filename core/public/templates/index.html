@@ -1,0 +1,106 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+    {% include 'components/header.html' %}
+    <div class="bg-background01 w-full h-full overlay table">
+        <div class="table-cell pt-20">
+            <div class="flex flex-col justify-center items-center my-0 mx-auto py-0 px-4 text-center w-full max-w-[960px]">
+                <img src="{% static '/images/logo1.png' %}" alt="logo" class="w-1/2 h-auto">
+                <p class="text-md text-gray-200 font-Roboto w-full font-thin mt-6">Certifica tu empresa en normativas ambientales y reguladoras, somos expertos en normativas tecnicas y sectoriales, realizamos un acompañamiento inegral en la certificacion de todo tipo de comercios</p>
+                <a href="#" class="rounded-full bg-gray-300 py-2 px-8 my-8 text-gray-800 font-semibold hover:bg-gray-400 transition-colors duration-300">CONTACTAR</a>
+            </div>
+        </div>
+    </div>
+    <main>
+        <section class="flex flex-row justify-between m-auto p-16">
+            <div class="flex flex-col w-1/2 text-justify">
+                <h1 class="uppercase text-3xl text-gray-800">ASESORIAS INTEGRALES</h1><br>
+                <p class="text-gray-600 text-md">Adquiere prestigio y confianza ofreciendo a sus clientes la 
+                    garantía de sus servicios con normas específicas para el sector turístico, mejorando la
+                    competitividad de su empresa frente a su competencia, y teniendo una certificación reconocida
+                    para lograr una mejor calidad del servicio. Estas normas nos ayudan a tener claridad sobre
+                    todos los procesos garantizando la satisfacción del cliente.<br><br>
+                    Queremos colaborarle a nuestros aliados en llevar a cabo las mejores
+                    prácticas para que no sólo estén al día con la normatividad vigente, sino para que al
+                    implementarlas, se den cuenta que están llevando a cabo un acto responsable y de
+                    empatía con el resto de la humanidad.
+                </p>
+            </div>
+            <img src="{% static 'images/img-desc.png' %}" alt="" class="w-96 h-auto mr-12">
+        </section>
+        <section class="text-center bg-gray-100 py-12">
+            <h2 class="relative py-4 text-5xl uppercase font-thin">Servicios</h2>
+            <p class="uppercase pb-12 font-thin">Transformando negocios con sostenibilidad</p>
+            <div class="flex flex-row py-8 px-8 items-center justify-center">
+                <div class="flex flex-col p-4">
+                    <i class="fa-solid fa-gavel text-7xl text-gray-400"></i>
+                    <h3 class="text-lg text-gray-600 font-semibold py-4">NORMATIVIDAD</h3>
+                    <p class="text-gray-600 font-thin">Alineamientos con criterios internacionales bajo la estructura de alto
+                        nivel con la normativas ISO. creación y legalización de empresas integrales</p>
+                </div>
+                <div class="flex flex-col p-4">
+                    <i class="fa-solid fa-tree-city text-7xl text-gray-400"></i>
+                    <h3 class="text-lg text-gray-600 font-semibold py-4">AMBIENTAL</h3>
+                    <p class="text-gray-600 font-thin">Impacto ambiental, gestión de riesgo, proyectos ambientales, diseño de
+                        plantas de tratamiento, programa de manejo de residuos sólidos</p>
+                </div>
+                <div class="flex flex-col p-4">
+                    <i class="fa-solid fa-shield-halved text-7xl text-gray-400"></i>
+                    <h3 class="text-lg text-gray-600 font-semibold py-4">SEGURIDAD</h3>
+                    <p class="text-gray-600 font-thin">Primeros auxilios, extinción del fuego y evacuación. sistemas de Gestión 
+                        de Seguridad y Salud en el Trabajo. Normativa general en cumplimiento integral</p>
+                </div>
+                <div class="flex flex-col p-4">
+                    <i class="fa-solid fa-broom text-7xl text-gray-400"></i>
+                    <h3 class="text-lg text-gray-600 font-semibold py-4">SANEAMIENTO</h3>
+                    <p class="text-gray-600 font-thin">Programa de limpieza y desinfección, programa de agua potable, gestión 
+                        de residuos sólidos, prevención de plagas, manejo de productos químicos</p>
+                </div>
+            </div>
+        </section>
+        <section class="flex flex-col justify-center items-center pt-20 px-32 bg-background02 h-full w-full text-center">
+            <p class="text-gray-300 uppercase text-lg font-thin">¡Expertos en normativas & certificaciones!</p><br>
+            <h2 class="text-gray-300 text-5xl font-thin">ASESORIAS INTEGRALES<br>ESPECIALIZADAS</h2>
+            <div class="flex flex-row gap-x-4 py-12">
+                <a class="text-gray-700 text-2xl rounded-full py-2 px-3 bg-gray-200 hover:bg-gray-400 transition-colors duration-300"  href="{{Setting.sURL1}}"><i class="fab fa-twitter"></i></a>
+                <a class="text-gray-700 text-2xl rounded-full py-2 px-3 bg-gray-200 hover:bg-gray-400 transition-colors duration-300" href="{{Setting.sURL2}}"><i class="fab fa-facebook"></i></a>
+                <a class="text-gray-700 text-2xl rounded-full py-2 px-3 bg-gray-200 hover:bg-gray-400 transition-colors duration-300" href="{{Setting.sURL3}}"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <hr class="border-gray-700 h-[1px] w-9/12 pt-4">
+            <div class="w-full text-center py-8 px-32 mb-12">
+                <p class="text-gray-300 uppercase text-sm font-thin">Cuando alguien nos contacta, no lo vemos como un cliente, lo vemos como un aliado.
+                    Por eso nuestra dedicación en cumplir con todas sus expectativas y no detenernos hasta que
+                    quedan totalmente satisfechas. </p><br>
+            </div>
+        </section>
+    </main>
+    {% include 'components/footer.html' %}
+    <!-- Javascrypts/Jquery ============================================================ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</body>
+</html>
