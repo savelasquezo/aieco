@@ -1,0 +1,58 @@
+{% load static %}
+{% load humanize %}
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="es" class="w-full h-full">
+<head>
+    <!-- HTML5 AIECO WEBSITE ========================= -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AIECO</title>
+    <meta name="author" content="Aieco">
+    <meta name="description" content="Asesorias Integrales">
+    <meta name="keywords" content="Asesorias">
+    <!-- Mobile Specific Metas ====================== -->
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Favicon ===================================== -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <!-- Stylesheets ================================= -->
+    <!-- Tailwind CSS ================================ -->
+    {% tailwind_css %}
+    <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+  <main class='flex flex-row h-screen bg-gray-100 py-4'>
+    {% include 'components/admin/navbar.html' %}
+    <section class="flex flex-col h-full w-full px-10">
+      {% include 'components/admin/header.html' %}
+      <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
+        <div class="relative flex flex-col gap-y-2 items-start justify-start h-full bg-gray-100 rounded-sm p-8 pb-2 border-double">
+          <div class="w-full flex flex-row items-center justify-end">
+            <div class="flex flex-row gap-x-2 uppercase text-xs">
+              <span><a href="{% url 'billing' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Facturacion</a></span> 
+              <span><a href="{% url 'methods' %}" class="text-blue-900 font-semibold">+ Medios de Pago</a></span>    
+              <span><a href="{% url 'history' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Mostrar Historial</a></span>
+              <span><a href="{% url 'invoice' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Descargar</a></span>   
+            </div>
+          </div>
+          <div class="py-4 leading-5">
+            <p class="uppercase text-sm font-semibold">Aieco</p>
+            <span class="flex flex-row items-center gap-x-1 text-sm"><p class="text-sm font-semibold">NIT:</p>{{settings.nit}}</span><br>
+            <span class="flex flex-row items-center gap-x-1 text-sm"><p class="text-sm font-semibold">Factura:</p>{{user.billing_code}}</span>
+          </div>
+          {% for i in iMethods %}
+          <div class="flex flex-col uppercase">
+              <span class="text-md font-semibold">{{i.bank}} (Ahorros)- {{i.bank_account}}</span>
+              <span class="text-sm font-thin">{{i.owner}} - C.C: {{i.owner_id}}</span>
+          </div>
+          {% endfor %}
+        </div>
+    </section>
+  </main>
+</body>
+</html>

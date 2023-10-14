@@ -1,0 +1,22 @@
+{% autoescape off %}
+Estimado {{ username }}!
+
+Le informamos que el documento {{ file }} está próximo a vencer. 
+Hemos detectado que la fecha de vencimiento se acerca y es importante tomar medidas adecuadas.
+
+Detalles del Documento:
+
+Número de Documento: {{ id_file }}
+Fecha de Vencimiento: {{ date_validity }}
+
+Si necesita alguna asistencia adicional o tiene alguna pregunta relacionada con este documento, no dude en ponerse en contacto con nuestro equipo de soporte.
+Por favor, tome en consideración esta notificación y actúe de acuerdo con los procedimientos establecidos.
+
+Agradecemos su atención. Si tiene alguna consulta técnica o requiere información adicional, estamos a su disposición.
+
+Atentamente,
+
+Aieco
+Telefono: +{{idx}}-{{ phone_site }}
+Email: {{ email_site }}
+{% endautoescape %}

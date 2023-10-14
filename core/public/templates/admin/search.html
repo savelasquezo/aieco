@@ -31,44 +31,48 @@
     <section class="flex flex-col h-full w-full px-10">
       {% include 'components/admin/header.html' %}
       <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
-        <div class="relative flex flex-col gap-y-2 items-start justify-start h-full bg-gray-100 rounded-sm p-8 pb-2 border-double">
-          <div class="w-full flex flex-row items-center justify-end">
-            <div class="flex flex-row gap-x-2 uppercase text-xs">
-              <span><a href="{% url 'billing' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Facturacion</a></span> 
-              <span><a href="{% url 'methods' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Medios de Pago</a></span>    
-              <span><a href="{% url 'history' %}" class="text-blue-900 font-semibold">+ Mostrar Historial</a></span>
-              <span><a href="{% url 'invoice' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Descargar</a></span>   
+        <div class="relative flex flex-col gap-y-2 items-center justify-start h-full bg-gray-100 rounded-md shadow-inner bg-opacity-95 p-6">
+            {% if not nitAccount %}
+            <div class="m-auto w-full flex flex-col justify-center items-center">
+                <img src="{% static '/images/logo0.png' %}" alt="logo" class="w-48 h-20 my-2">
+                <form method="get" class="container flex flex-col justify-center items-center mx-auto gap-y-6">
+                    <input type="text" name="nitCompany" class="w-2/3 text-center rounded-sm shadow-sm">
+                    <p class="text-center text-xs font-thin -mt-4">Ingrese el NIT de la empresa/comercio a 
+                        consultar agregando el digito de verificacion </p>
+                    <input type="submit" value="CONSULTAR" class="text-sm shadow-md px-3 py-2 rounded-md text-white bg-green-700 hover:bg-green-900 transition duration-300">
+                </form>
             </div>
-          </div>
-              <table class="min-w-full text-center text-sm font-light mt-4">
+            {% elif nitAccount %}
+            <div class="w-full flex flex-row items-center justify-between">
+                <div class="flex flex-col gap-x-2 uppercase text-xs text-left mr-1">
+                    <span class="flex flex-row gap-x-1 font-semibold text-green-900"><p>Empresa:</p>{{nitAccount.company}}</span>
+                    <span class="flex flex-row gap-x-1 font-semibold text-green-900"><p>NIT:</p>{{nitAccount.nit}}</span>
+                  </div>
+                  <span><a href="{% url 'search' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300 uppercase text-xs">+ Nueva Consulta</a></span>  
+            </div>
+            <table class="min-w-full text-center text-sm font-light">
                 <thead
-                  class="border-b bg-gray-500 font-medium text-white">
+                  class="border-b bg-neutral-600 font-medium text-white">
                   <tr class="uppercase text-xs">
-                    <th scope="col" class=" px-6 py-2">Codigo</th>
-                    <th scope="col" class=" px-6 py-2">Metodo</th>
-                    <th scope="col" class=" px-6 py-2">Valor</th>
-                    <th scope="col" class=" px-6 py-2">Fecha</th>
-                    <th scope="col" class=" px-6 py-2">Voucher</th>
-                    <th scope="col" class=" px-6 py-2">Estado</th>
+                    <th scope="col" class=" px-6 py-4">ID</th>
+                    <th scope="col" class=" px-6 py-4">Documento</th>
+                    <th scope="col" class=" px-6 py-4">Inscripcion</th>
+                    <th scope="col" class=" px-6 py-4">Vencimiento</th>
+                    <th scope="col" class=" px-6 py-4">URL</th>
                   </tr>
                 </thead>
                 <tbody>
                   {% for i in iListFiles %}
-                  <tr class="border-b uppercase text-xs">
-                    <td class="whitespace-nowrap px-6 py-2 font-Courier font-semibold">{{i.invoice}}</td>
-                    <td class="whitespace-nowrap px-6 py-2">{% if i.state == "overdue" %}---{% else %}{{i.method}}{% endif %}</td>
-                    <td class="whitespace-nowrap px-6 py-2">${{i.payment|intcomma}}</td>
-                    <td class="whitespace-nowrap px-6 py-2">{{i.date_succes|date:'d M Y'}}</td>
-                    <td class="whitespace-nowrap px-6 py-2">{% if i.state == "overdue" %}---{% else %}{{i.voucher}}{% endif %}</td>
-                    <td class="whitespace-nowrap px-6 py-2 font-Courier">
-                      {% if i.state == "overdue" %}
-                      <span class="uppercase text-xs bg-red-800 text-gray-100 font-semibold px-2 py-1 rounded-sm">
-                        Vencida
-                      </span>
+                  <tr class="border-b {% if i.file_state %}{% else %}bg-red-100{% endif %}">
+                    <td class="whitespace-nowrap px-6 py-2 font-medium">{{i.id}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">{{i.filename}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">{{i.file_date|date:'d M Y'}}</td>
+                    <td class="whitespace-nowrap px-6 py-2 {% if i.file_state %}{% else %}font-semibold text-red-600{% endif %}">{{i.file_validity|date:'d M Y'}}</td>
+                    <td class="whitespace-nowrap px-6 py-2">
+                      {% if i.files %}
+                        <a href="{{i.files.url}}" target="_blank"><i class="fas fa-download text-blue-600"></i></a>
                       {% else %}
-                      <span class="uppercase text-xs bg-green-800 text-gray-100 font-semibold px-2 py-1 rounded-sm">
-                        Abonada
-                      </span>
+                        <i class="fa-solid fa-link-slash text-red-800"></i>
                       {% endif %}
                     </td>
                   </tr>
@@ -76,7 +80,7 @@
                   {% if not iListFiles.has_next %}
                     {% for i in FixListPage %}
                     <tr class="border-b">
-                      {% for _ in '123456' %}
+                      {% for _ in '12345' %}
                       <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
                       {% endfor %}
                     </tr>
@@ -84,15 +88,15 @@
                   {% elif not iListFiles.has_other_pages %}
                     {% for i in FixListPage %}
                     <tr class="border-b">
-                      {% for _ in '123456' %}
+                      {% for _ in '12345' %}
                       <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
                       {% endfor %}
                     </tr>
                     {% endfor %}           
                   {% endif %}
                 </tbody>
-              </table>
-              <nav class="absolute bottom-0 flex items-center justify-center w-full text-center my-4">
+            </table>
+            <nav class="absolute bottom-0 flex items-center justify-center w-full text-center my-4">
                 <ul>
                     {% if iListFiles.has_previous %}
                     <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg" 
@@ -118,9 +122,10 @@
                         href=""><i class="fa-solid fa-angles-right text-sm text-gray-400 cursor-not-allowed"></i></a></li>
                     {% endif %}
                 </ul>
-              </nav>
-            </div>
+            </nav>
+            {% endif %}
         </div>
+      </div>
     </section>
   </main>
 </body>

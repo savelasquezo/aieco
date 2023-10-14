@@ -1,10 +1,12 @@
 @font-face {font-family: 'Animace';src: url('/static/fonts/Animeace.ttf') format('truetype');}
 @font-face {font-family: 'Roboto';src: url('/static/fonts/Roboto.ttf') format('truetype');}
 @font-face {font-family: 'Montserrat';src: url('/static/fonts/Roboto.ttf') format('truetype');}
+@font-face {font-family: 'Courier';src: url('/static/fonts/Courier.ttf') format('truetype');}
 
 .font-Roboto {font-family: 'Roboto', sans-serif;}
 .font-Animace {font-family: 'Animace', sans-serif;}
 .font-Montserrat {font-family: 'Montserrat', sans-serif;}
+.font-Courier {font-family: 'Courier', sans-serif;}
 
 html body{width: 100%; height: 100%;}
 

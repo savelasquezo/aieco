@@ -32,34 +32,40 @@
       {% include 'components/admin/header.html' %}
       <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
         <div class="relative flex flex-col gap-y-2 items-start justify-start h-full bg-gray-100 rounded-sm p-8 pb-2 border-double">
-          <div class="w-full flex flex-row items-center justify-between">
-            <img src="{% static '/images/logo0.png' %}" alt="logo" class="w-auto h-12">
+          <div class="w-full flex flex-row items-center justify-end">
             <div class="flex flex-row gap-x-2 uppercase text-xs">
-              <span><a href="{% url 'invoice' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Descargar</a></span>   
-              <span><a href="{% url 'history' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Mostrar Historial</a></span>   
+              {% if accountInvoice.state == "current" %}
+                <span><a href="{% url 'billing' %}" class="text-blue-900 font-semibold">+ Facturacion</a></span> 
+                <span><a href="{% url 'methods' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Medios de Pago</a></span>    
+                <span><a href="{% url 'history' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Mostrar Historial</a></span>
+                <span><a href="{% url 'invoice' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Descargar</a></span>
+                {% else %}
+                <span><a href="{% url 'history' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Mostrar Historial</a></span>
+                {% endif %}       
             </div>
           </div>
+          {% if accountInvoice.state == "current" %}
           <div class="w-full flex flex-col my-4 justify-start">
             <div class="border border-gray-400 text-xs text-gray-600">
               <div class="grid grid-cols-10 items-center justify-center">
                 <p class="col-span-7 border-b border-gray-400 px-2 text-left font-semibold">{{user.company|default:"--"}}</p>
                 <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Fecha</p>
-                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{user.payment_date|date:'d M'|default:"--"}}</p>
+                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{accountInvoice.date_invoice|date:'d M'|default:"--"}}</p>
               </div>
               <div class="grid grid-cols-10 items-center justify-center">
                 <p class="col-span-7 border-b border-gray-400 px-2 text-left font-semibold">NIT: {{user.nit|default:"--"}}</p>
                 <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Identificacion</p>
-                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{user.company_id|default:"--"}}</p>
+                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{accountInvoice.company_id|default:"--"}}</p>
               </div>
               <div class="grid grid-cols-10 items-center justify-center">
                 <p class="col-span-7 border-b border-gray-400 px-2 text-left font-semibold">{{user.country|default:"--"}} / {{user.city|default:"--"}}</p>
-                <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Numeral</p>
-                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{user.billing_code|default:"--"}}</p>
+                <p class="col-span-1 border-b border-gray-400 px-2 border-l text-left font-thin">Factura</p>
+                <p class="col-span-2 border-b border-gray-400 px-2 border-l text-center">{{accountInvoice.invoice|default:"--"}}</p>
               </div>
               <div class="grid grid-cols-10 items-center justify-center">
                 <p class="col-span-7 border-gray-400 px-2 text-left font-semibold">{{user.address|default:"--"}}</p>
                 <p class="col-span-1 border-gray-400 px-2 border-l text-left font-thin">Vencimiento</p>
-                <p class="col-span-2 border-gray-400 px-2 border-l text-center">{{user.due_date|date:'d M'|default:"--"}}</p>
+                <p class="col-span-2 border-gray-400 px-2 border-l text-center">{{accountInvoice.date_dolimit|date:'d M'|default:"--"}}</p>
               </div>
             </div>
           </div>
@@ -77,51 +83,61 @@
                 <p class="col-span-2 border-b py-1 bg-green-800 text-white px-2 border-gray-400 border-l">Total</p>
               </div>
               <div class="grid grid-cols-7 items-center justify-center text-center">
-                <p class="col-span-1 px-2 border-gray-400">{{user.debt|default:0}}</p>
-                <p class="col-span-1 border-l px-2 border-gray-400">{{user.payment|default:0}}</p>
-                <p class="col-span-1 border-l px-2 border-gray-400">{{user.balance|default:0}}</p>
-                <p class="col-span-1 border-l px-2 border-gray-400">{{user.discount|default:0}}</p>
-                <p class="col-span-1 border-l px-2 border-gray-400">{{user.others|default:0}}</p>
-                <p class="col-span-2 border-l px-2 border-gray-400">{{user.payment_total|default:0}}</p>
+                <p class="col-span-1 px-2 border-gray-400">{{accountInvoice.debt|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{accountInvoice.payment|intcomma|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{accountInvoice.balance|intcomma|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{accountInvoice.discount|intcomma|default:0}}</p>
+                <p class="col-span-1 border-l px-2 border-gray-400">{{accountInvoice.others|intcomma|default:0}}</p>
+                <p class="col-span-2 border-l px-2 border-gray-400">{{accountInvoice.payment_total|intcomma|default:0}}</p>
               </div>
             </div>
           </div>
+          <hr class="w-full border-t border-gray-400">
           <div class="w-full flex flex-col items-end justify-start">
             <div class="w-[43%] text-xs">
               <div class="grid grid-cols-3 items-center justify-center uppercase font-semibold">
                 <p class="col-span-1 border-b py-1 bg-green-800 text-white border-l px-2 border-gray-400">Detalles</p>
                 <p class="col-span-2 border-b py-1 bg-green-800 text-white border-l px-2 border-gray-400 text-right">Subtotal</p>
               </div>
+              {% if accountInvoice.payment > 0 %}
               <div class="grid grid-cols-3 items-center justify-center">
                 <p class="col-span-1 border-b border-l px-2 border-gray-400">Website Aieco</p>
                 <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
-                  <span>$</span><p>200.000</p>
+                  <span>$</span><p>{{accountInvoice.payment|intcomma}}</p>
                 </div>
               </div>
-              <div class="grid grid-cols-3 items-center justify-center">
-                <p class="col-span-1 border-b border-l px-2 border-gray-400">IVA</p>
-                <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
-                  <span>$</span><p>0</p>
+              {% endif %}
+              {% for i in accountAddons %}
+                <div class="grid grid-cols-3 items-center justify-center">
+                  <p class="col-span-1 border-b border-l px-2 border-gray-400">{{i.code}}</p>
+                  <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
+                    <span>$</span><p>{{i.price|intcomma}}</p>
+                  </div>
                 </div>
-              </div>
+              {% endfor %}
               <div class="grid grid-cols-3 items-center justify-center">
                 <span class="col-span-1"></span>
                 <div class="flex flex-row items-center justify-between col-span-2 border-b border-x px-2 border-gray-400 text-right">
-                  <span>$</span><p>200.000</p>
+                  <span>$</span><p>{{accountInvoice.payment_total|intcomma }}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="absolute bottom-10 right-8 w-full flex flex-col items-end justify-end">
-            <div class="w-[26%] flex flex-col border border-gray-400 text-xs">
+          <div class="w-full flex flex-col items-end justify-start">
+            <div class="w-[29%] flex flex-col border border-gray-400 text-xs">
               <div class="items-center justify-center">
                 <p class="col-span-1 py-1 bg-green-800 text-white px-2 border-gray-400 uppercase text-right font-semibold">Total</p>
               </div>
               <div class="flex flex-row items-center justify-between pl-2">
-                <span>$</span><p class="col-span-1 py-1 text-gray-600 font-semibold px-2 border-gray-400 text-right">200.000</p>
+                <span>$</span><p class="col-span-1 py-1 text-gray-600 font-semibold px-2 border-gray-400 text-right">{{accountInvoice.payment_total|intcomma}}</p>
               </div>
             </div>
           </div>
+          {% else %}
+          <div class="w-full h-full flex justify-center items-start">
+            <p class="mt-20 font-thin text-sm">¡Estás al día y no tienes facturas pendientes!</p>
+          </div>
+          {% endif %}  
         </div>
       </div>
     </section>

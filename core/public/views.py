@@ -1,42 +1,36 @@
 import re, os, io
 
-from django.shortcuts import render
 from django.conf import settings
-from django.utils import timezone
-from django.views.generic.base import TemplateView
-from django.shortcuts import redirect, render
 from django.urls import reverse
-from django.views import View
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.forms import PasswordResetForm
-from django.utils.http import urlsafe_base64_encode
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes
+from django.shortcuts import redirect, render
 from django.db.models.query_utils import Q
-from django.core.paginator import Paginator
-from django.http import HttpResponse, FileResponse
-from django.core.mail import send_mail, BadHeaderError
 from django.template.loader import render_to_string
-from django.contrib.auth.views import LoginView
+from django.http import HttpResponse
+from django.core.mail import BadHeaderError,send_mail
+from django.core.paginator import Paginator
+from django.utils import timezone
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.views import View
+from django.views.generic.base import TemplateView
+from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from xhtml2pdf import pisa
-
 from .tools import gToken
 
 import public.models as model
 import public.forms as forms
 
 
-
-
-
 class IndexView(TemplateView):
     template_name = 'index.html'
 
     def get(self, request, *args, **kwargs):
-
         context = super().get_context_data(**kwargs)
 
         try:
@@ -44,6 +38,7 @@ class IndexView(TemplateView):
             context.update({
                 'arrayLegalLinks':arrayLegalLinks,
             })
+
         except Exception as e:
             with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
                 arrayLegalLinks = []
@@ -56,8 +51,12 @@ class IndexView(TemplateView):
 class AccountView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/admin.html'
 
-    def get(self, request, *args, **kwargs):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = forms.NotificationForm()
+        return context
 
+    def get(self, request, *args, **kwargs):
         context = super().get_context_data(**kwargs)
 
         try:
@@ -67,6 +66,7 @@ class AccountView(LoginRequiredMixin, TemplateView):
                 'arrayAnnouncements':arrayAnnouncements,
                 'arrayNotifications':arrayNotifications,
             })
+
         except Exception as e:
             with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
                 arrayAnnouncements = []
@@ -76,16 +76,97 @@ class AccountView(LoginRequiredMixin, TemplateView):
 
         return self.render_to_response(context)
 
+    def post(self, request, *args, **kwargs):
+        dialogID = request.POST.get('dialogID')
+
+        try:
+            dialogNotification = model.AccountNotification.objects.get(id=dialogID)
+            dialogNotification.read = True if 'read' in request.POST else False
+            dialogNotification.archived = True if 'archived' in request.POST else False
+            dialogNotification.save()
+
+        except Exception as e:
+            with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
+                eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+                f.write("Undefined dialogNotification/dialogNotification--> Date: {} Error: {}\n".format(eDate, str(e)))
+
+        return redirect(reverse('admin'))
+
+
+class AccountSearchView(LoginRequiredMixin, TemplateView):
+    template_name = 'admin/search.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or not request.user.is_inspector:
+            return redirect(reverse('admin'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        nitCompany = self.request.GET.get('nitCompany')
+
+        try:
+    
+            ITEMS = 7
+            MAXPAGES = 10
+
+            nitAccount = model.Account.objects.get(nit=nitCompany)
+            iFiles = model.AccountFiles.objects.filter(account=nitAccount).order_by("id")[:ITEMS*MAXPAGES]
+            for i in iFiles:
+                if not i.file_state:
+                    i.files = None
+                    i.save()
+
+            iListFiles = Paginator(iFiles,ITEMS).get_page(self.request.GET.get('page'))
+
+            iFileFix = ITEMS - len(iFiles)%ITEMS
+
+            if iFileFix == ITEMS and len(iFiles) != 0:
+                iFileFix = 0
+
+            context = super().get_context_data(**kwargs)
+            context.update({
+                'nitAccount':nitAccount,
+                "iFiles": iFiles,
+                'iListFiles':iListFiles,
+                'FixListPage':range(0,iFileFix)
+            })
+
+            return context
+
+        except Exception as e:
+            context['nitAccount'] = None
+            with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
+                eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+                f.write("Undefined AccountSearchView/AccountSearchView--> Date: {} Error: {}\n".format(eDate, str(e)))
+           
+
+        return context
 
 class AccountFilesView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/files.html'
 
     def get(self, request, *args, **kwargs):
 
-        ITEMS = 10
+        ITEMS = 7
         MAXPAGES = 10
 
-        iFiles = model.AccountFiles.objects.filter(account=request.user).order_by("id")[:ITEMS*MAXPAGES]
+        accountFiles = model.AccountFiles.objects.filter(account=request.user)
+
+        nameFile = ""
+
+        if request.GET.get('nameFile'):
+            nameFile = request.GET.get('nameFile')
+            accountFiles = accountFiles.filter(filename__icontains=nameFile)
+
+        iFiles = accountFiles.order_by("id")[:ITEMS*MAXPAGES]
+        for i in iFiles:
+            if not i.file_state:
+                i.files = None
+                i.save()
+
         iListFiles = Paginator(iFiles,ITEMS).get_page(request.GET.get('page'))
 
         iFileFix = ITEMS - len(iFiles)%ITEMS
@@ -95,12 +176,38 @@ class AccountFilesView(LoginRequiredMixin, TemplateView):
 
         context = super().get_context_data(**kwargs)
         context.update({
+            'nameFile': nameFile,
             "iFiles": iFiles,
             'iListFiles':iListFiles,
             'FixListPage':range(0,iFileFix)
         })
 
         return self.render_to_response(context)
+
+
+    def post(self, request, *args, **kwargs):
+        codeFile = request.POST.get('codeFile')
+        codeFile = model.Files.objects.get(code=codeFile)
+        try:
+            iFile = model.AccountFiles.objects.get(code=codeFile,account=request.user)
+            iFile.delete()
+
+            newFileRequest = model.RequestFiles.objects.create(
+                account = request.user,
+                code = codeFile,
+                filename = codeFile.filename,
+            )
+            newFileRequest.save()
+            messages.success(request, '¡Solicitud Realizada!', extra_tags="title")
+            
+        except Exception as e:
+            messages.error(request, '¡Solicitud Incompleta!', extra_tags="title")
+            with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
+                eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+                f.write("Undefined renewRequestFile--> Date: {} Error: {}\n".format(eDate, str(e)))
+
+        return redirect(reverse('files'))
+
 
 class AccountGaleryView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/galery.html'
@@ -130,15 +237,29 @@ class AccountGaleryView(LoginRequiredMixin, TemplateView):
 class AccountBillingView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/billing.html'
 
+    def get(self, request, *args, **kwargs):
+
+        accountInvoice = model.AccountBilling.objects.filter(account=request.user).order_by("-id").first()
+        accountAddons = model.AccountBillingAddons.objects.filter(billing=accountInvoice).order_by("id")
+
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "accountInvoice": accountInvoice,
+            "accountAddons":accountAddons
+        })
+
+        return self.render_to_response(context)
+
 class AccountHistoryView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/billing-history.html'
 
     def get(self, request, *args, **kwargs):
 
-        ITEMS = 10
+        ITEMS = 7
         MAXPAGES = 10
 
-        iFiles = model.AccountBilling.objects.filter(account=request.user).order_by("id")[:ITEMS*MAXPAGES]
+        accountBills = model.AccountBilling.objects.filter(account=request.user).exclude(state="current")
+        iFiles = accountBills.order_by("-id")[:ITEMS*MAXPAGES]
         iListFiles = Paginator(iFiles,ITEMS).get_page(request.GET.get('page'))
 
         iFileFix = ITEMS - len(iFiles)%ITEMS
@@ -154,6 +275,25 @@ class AccountHistoryView(LoginRequiredMixin, TemplateView):
         })
 
         return self.render_to_response(context)
+
+
+
+class AccountMethodsView(LoginRequiredMixin, TemplateView):
+    template_name = 'admin/billing-methods.html'
+
+    def get(self, request, *args, **kwargs):
+
+        ITEMS = 5
+        iSettings = model.Settings.objects.first()
+        iMethods = model.PaymentMethods.objects.filter(settings=iSettings, is_active=True).order_by("id")[:ITEMS]
+
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "iMethods": iMethods,
+        })
+
+        return self.render_to_response(context)
+
 
 class AccountSupportView(LoginRequiredMixin, TemplateView):
     template_name = 'admin/support.html'
@@ -171,13 +311,130 @@ class AccountSupportView(LoginRequiredMixin, TemplateView):
                 messages.success(request, '¡Mensaje Enviado!', extra_tags="title")
                 messages.success(request, f'¡Gracias por contactarnos, Tu solicitud ha sido recibida!', extra_tags="info")
             
-            except:
+            except Exception as e:
+
                 messages.error(request, '¡Error!',extra_tags="title")
                 messages.error(request, f'Lamentablemente, se produjo un error al procesar tu solicitud. Intentalo nuevamente!', extra_tags="info")
-            
+                with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
+                    eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+                    f.write("Undefined newMessages--> Date: {} Error: {}\n".format(eDate, str(e)))
+
             return redirect(reverse('support'))
 
         return self.render_to_response({'form': form})
+
+
+
+class AccountShopView(LoginRequiredMixin, TemplateView):
+    template_name = 'admin/shop.html'
+
+    def get(self, request, *args, **kwargs):
+        ITEMS = 7
+        MAXPAGES = 10
+
+        requestFiles = model.RequestFiles.objects.filter(account=request.user).values_list('code__code', flat=True)
+        accountFiles = model.AccountFiles.objects.filter(account=request.user).values_list('code__code', flat=True)
+
+        AllFiles = model.Files.objects.filter(is_active=True)
+        nameFile = ""
+
+        if request.GET.get('nameFile'):
+            nameFile = request.GET.get('nameFile')
+            AllFiles = AllFiles.filter(filename__icontains=nameFile)
+
+        iFiles = AllFiles.exclude(Q(code__in=accountFiles) | Q(code__in=requestFiles)).order_by("id")[:ITEMS * MAXPAGES]
+        iListFiles = Paginator(iFiles, ITEMS).get_page(request.GET.get('page'))
+
+        iFileFix = ITEMS - len(iFiles) % ITEMS
+
+        if iFileFix == ITEMS and len(iFiles) != 0:
+            iFileFix = 0
+
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'nameFile': nameFile,
+            'iFiles': iFiles,
+            'iListFiles': iListFiles,
+            'FixListPage': range(0, iFileFix),
+        })
+
+        return self.render_to_response(context)
+
+
+    def post(self, request, *args, **kwargs):
+        codeFile = request.POST.get('codeFile')
+
+        codeFile = model.Files.objects.get(code=codeFile)
+
+        try:
+            newFileRequest = model.RequestFiles.objects.create(
+                account = request.user,
+                code = codeFile,
+                filename = codeFile.filename,
+            )
+
+            newFileRequest.save()
+            messages.success(request, '¡Solicitud Realizada!', extra_tags="title")
+            
+        except Exception as e:
+            messages.error(request, '¡Solicitud Incompleta!', extra_tags="title")
+            with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
+                eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+                f.write("Undefined NewRequestFile--> Date: {} Error: {}\n".format(eDate, str(e)))
+
+        return redirect(reverse('shop'))
+
+
+class AccountShopTicketsView(LoginRequiredMixin, TemplateView):
+    template_name = 'admin/shop-tickets.html'
+
+    def get(self, request, *args, **kwargs):
+
+        ITEMS = 7
+        MAXPAGES = 10
+
+        requestFiles = model.RequestFiles.objects.filter(account=request.user)
+        nameFile = ""
+
+        if request.GET.get('nameFile'):
+            nameFile = request.GET.get('nameFile')
+            requestFiles = requestFiles.filter(filename__icontains=nameFile)
+
+        iFiles = requestFiles.order_by("id")[:ITEMS*MAXPAGES]
+        iListFiles = Paginator(iFiles,ITEMS).get_page(request.GET.get('page'))
+
+        iFileFix = ITEMS - len(iFiles)%ITEMS
+
+        if iFileFix == ITEMS and len(iFiles) != 0:
+            iFileFix = 0
+
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'nameFile':nameFile,
+            'iFiles': iFiles,
+            'iListFiles':iListFiles,
+            'FixListPage':range(0,iFileFix),
+        })
+
+        return self.render_to_response(context)
+
+
+    def post(self, request, *args, **kwargs):
+        idFile = request.POST.get('idFile')
+        try:
+            iFile = model.RequestFiles.objects.get(id=idFile,account=request.user)
+            iFile.delete()
+            messages.success(request, '¡Solicitud Cancelada!', extra_tags="title")
+            
+        except Exception as e:
+            messages.error(request, '¡Solicitud Incompleta!', extra_tags="title")
+            with open(os.path.join(settings.BASE_DIR, 'logs/django.log'), 'a') as f:
+                eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+                f.write("Undefined NewRequestFile--> Date: {} Error: {}\n".format(eDate, str(e)))
+
+        return redirect(reverse('tickets'))
+
+
 
 class LegalView(TemplateView):
     template_name='pages/legal.html'

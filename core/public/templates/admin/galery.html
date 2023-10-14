@@ -31,50 +31,56 @@
     <section class="flex flex-col h-full w-full px-10">
       {% include 'components/admin/header.html' %}
       <div class="bg-white h-[80vh] px-8 py-4 rounded-md shadow-inner bg-opacity-90 space-x-4">
-        <div class="relative flex flex-col p-3 items-center justify-start w-full h-full bg-gray-100 rounded-md shadow-inner overflow-scroll overflow-x-hidden">
-            <div class="min-w-full text-center text-sm font-light">
-              {% if iListFiles %}
-              <div class="grid grid-cols-3 items-start justify-center gap-x-8 gap-y-4">
-                {% for i in iListFiles %}
-                <div class="w-72 h-44 object-fill">
-                  <video width="100%" height="128" controls class="w-full h-44 object-cover rounded-sm">
-                      <source src="{{ i.file.url }}" type="video/mp4">
-                  </video>
-                </div>
-                {% endfor %}
+        {% if iFiles %}
+        <div class="relative flex flex-col pr-0 pl-8 items-center justify-start w-full h-full bg-gray-100 rounded-md shadow-inner overflow-scroll overflow-x-hidden">
+          <div class="min-w-full text-center text-sm font-light">
+            {% if iListFiles %}
+            <div class="grid grid-cols-3 items-center justify-center gap-x-2 gap-y-3">
+              {% for i in iListFiles %}
+              <div class="w-72 h-44 object-fill my-2">
+                <span class="my-1 text-xs font-semibold uppercase">{{i.title}}</span>
+                <video width="100%" height="128" controls class="w-full h-44 object-cover rounded-sm" loading="lazy" title="{{ i.description }}">
+                    <source src="{{ i.file.url }}" type="video/mp4">
+                </video>
               </div>
-              {% else %}
-                <p class="mt-10">No hay videos disponibles en la galería.</p>
-              {% endif %}
+              {% endfor %}
             </div>
-            <nav class="absolute bottom-0 flex items-center justify-center w-full text-center mb-7">
-              <ul>
-                  {% if iListFiles.has_previous %}
-                  <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg" 
-                      href="?page={{ iListFiles.previous_page_number }}"><i class="fa-solid fa-angles-left text-sm text-gray-700"></i></a></li>
-                  {% else %}
-                  <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
-                      href=""><i class="fa-solid fa-angles-left text-sm text-gray-400 cursor-not-allowed"></i></a></li>
-                  {% endif %}
-                  {% for page in iListFiles.paginator.page_range %}
-                  {% if page == iListFiles.number %}
-                  <li class="bg-gray-300 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
-                      href="">{{ page }}</a></li>
-                  {% else %}
-                  <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg"
-                      href="?page={{ page }}">{{ page }}</a></li>
-                  {% endif %}
-                  {% endfor %}
-                  {% if iListFiles.has_next %}
-                  <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg"
-                      href="?page={{ iListFiles.next_page_number }}"><i class="fa-solid fa-angles-right text-sm text-gray-700"></i></a></li>
-                  {% else %}
-                  <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
-                      href=""><i class="fa-solid fa-angles-right text-sm text-gray-400 cursor-not-allowed"></i></a></li>
-                  {% endif %}
-              </ul>
-            </nav>
+            {% endif %}
+          </div>
+          <nav class="absolute bottom-0 flex items-center justify-center w-full text-center mb-2">
+            <ul>
+                {% if iListFiles.has_previous %}
+                <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg" 
+                    href="?page={{ iListFiles.previous_page_number }}"><i class="fa-solid fa-angles-left text-sm text-gray-700"></i></a></li>
+                {% else %}
+                <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
+                    href=""><i class="fa-solid fa-angles-left text-sm text-gray-400 cursor-not-allowed"></i></a></li>
+                {% endif %}
+                {% for page in iListFiles.paginator.page_range %}
+                {% if page == iListFiles.number %}
+                <li class="bg-gray-300 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
+                    href="">{{ page }}</a></li>
+                {% else %}
+                <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg"
+                    href="?page={{ page }}">{{ page }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if iListFiles.has_next %}
+                <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block hover:bg-gray-300"><a class="block border-none font-normal text-lg"
+                    href="?page={{ iListFiles.next_page_number }}"><i class="fa-solid fa-angles-right text-sm text-gray-700"></i></a></li>
+                {% else %}
+                <li class="bg-gray-200 rounded-full px-3 pb-1 inline-block"><a class="block border-none font-normal text-lg"
+                    href=""><i class="fa-solid fa-angles-right text-sm text-gray-400 cursor-not-allowed"></i></a></li>
+                {% endif %}
+            </ul>
+          </nav>
         </div>
+        {% else %}
+        <div class="relative flex flex-col pr-0 pl-8 items-center justify-start w-full h-full bg-gray-100 rounded-md">
+          <p class="mt-10 font-thin text-sm">No hay videos disponibles en la galería</p>
+        </div>
+        {% endif %}
+      </div>
     </section>
   </main>
 </body>

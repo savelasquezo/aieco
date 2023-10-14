@@ -44,6 +44,8 @@
               </ul>
             </div>
             <div class="flex flex-row gap-x-4 items-center">
+              <span><a href="{% url 'shop' %}" class="text-blue-600 font-semibold hover:text-blue-800 transition-colors duration-300">+ Catalogo</a></span> 
+              <span><a href="{% url 'tickets' %}" class="text-blue-900 font-semibold" >+ Solicitudes</a></span>
               <div class="flex flex-row gap-x-2 uppercase text-xs">
                 <form method="GET">
                   {% csrf_token %}
@@ -58,53 +60,61 @@
           <table class="min-w-full table-fixed text-center text-sm font-light mt-4">
             <thead class="border-b bg-gray-500 font-medium text-white">
               <tr class="uppercase text-xs">
-                <th scope="col" class=" px-6 py-4">ID</th>
-                <th scope="col" class=" px-6 py-4">Documento</th>
-                <th scope="col" class=" px-6 py-4">Inscripcion</th>
-                <th scope="col" class=" px-6 py-4">Vencimiento</th>
-                <th scope="col" class=" px-6 py-4">URL</th>
+                <th scope="col" class="w-16 px-6 py-2">Código</th>
+                <th scope="col" class="w-40 px-6 py-2">Nombre</th>
+                <th scope="col" class="w-24 px-6 py-2">Valor</th>
+                <th scope="col" class="w-32 px-6 py-2">Solicitado</th>
+                <th scope="col" class="w-24 px-6 py-2">Vigencia</th>
+                <th scope="col" class="w-16 px-6 py-2"><i class="fa-solid fa-ticket"></i></th>
               </tr>
             </thead>
-            <tbody>
-              {% for i in iListFiles %}
-              <tr class="border-b">
-                <td class="whitespace-nowrap px-6 py-2 font-medium">{{i.code}}</td>
-                <td class="whitespace-nowrap px-6 py-2">{{i.filename}}</td>
-                <td class="whitespace-nowrap px-6 py-2">{{i.file_date|date:'d M Y'}}</td>
-                <td class="whitespace-nowrap px-6 py-2 {% if i.file_state %}{% else %}font-semibold text-red-600{% endif %}">{{i.file_validity|date:'d M Y'}}</td>
-                <td class="whitespace-nowrap px-6 py-2">
-                  {% if i.files %}
-                    <a href="{{i.files.url}}" target="_blank"><i class="fas fa-download text-blue-600"></i></a>
-                  {% else %}
-                  <form method="POST">
-                    {% csrf_token %}
-                    <input type="hidden" name="codeFile" value="{{i.code}}">
-                    <button type="submit" class="uppercase text-xs bg-blue-600 hover:bg-blue-800 text-gray-100 font-semibold px-2 py-1 rounded-sm transition duration-300">
-                      Renovar
-                    </button>
-                  </form>
-                  {% endif %}
-                </td>
-              </tr>
-              {% endfor %}
-              {% if not iListFiles.has_next %}
-                {% for i in FixListPage %}
-                <tr class="border-b">
-                  {% for _ in '12345' %}
-                  <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
-                  {% endfor %}
+              <tbody>
+                {% for i in iListFiles %}
+                <tr class="border-b uppercase text-xs">
+                  <td class="whitespace-nowrap w-16 px-6 py-2 font-Courier font-semibold text-base">{{i.code}}</td>
+                  <td class="whitespace-nowrap w-40 px-6 py-2">{{i.filename}}</td>
+                  <td class="whitespace-nowrap w-24 px-6 py-2">{% if i.do == "waiting" %}---{% else %}${{i.price|intcomma}}{% endif %}</td>
+                  <td class="whitespace-nowrap w-32 px-6 py-2">{{i.date_request|date:'d M Y'}}</td>
+                  <td class="whitespace-nowrap w-24 px-6 py-2">{% if i.do == "waiting" %}---{% else %}{{i.file_validity|date:'d M Y'}}{% endif %}</td>
+                  <td class="whitespace-nowrap w-16 px-6 py-2 font-Courier">
+                    {% if i.do == "waiting" %}
+                    <form method="POST">
+                      {% csrf_token %}
+                      <input type="hidden" name="idFile" value="{{i.id}}">
+                      <button type="submit" class="uppercase text-xs bg-red-600 hover:bg-red-800 text-gray-100 font-semibold px-2 py-1 rounded-sm transition duration-300">
+                        Cancelar
+                      </button>
+                    </form>
+                    {% elif i.do == "send"%}
+                    <span class="uppercase text-xs bg-gray-400 text-gray-100 font-semibold px-2 py-1 rounded-sm">
+                      Activado
+                    </span>
+                    {% elif i.do == "bill"%}
+                    <span class="uppercase text-xs bg-gray-700 text-gray-100 font-semibold px-2 py-1 rounded-sm">
+                      Pendiente
+                    </span>
+                    {% endif %}
+                  </td>
                 </tr>
                 {% endfor %}
-              {% elif not iListFiles.has_other_pages %}
-                {% for i in FixListPage %}
-                <tr class="border-b">
-                  {% for _ in '12345' %}
-                  <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
+                {% if not iListFiles.has_next %}
+                  {% for i in FixListPage %}
+                  <tr class="border-b">
+                    {% for _ in '123456' %}
+                    <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
+                    {% endfor %}
+                  </tr>
                   {% endfor %}
-                </tr>
-                {% endfor %}           
-              {% endif %}
-            </tbody>
+                {% elif not iListFiles.has_other_pages %}
+                  {% for i in FixListPage %}
+                  <tr class="border-b">
+                    {% for _ in '123456' %}
+                    <td class="whitespace-nowrap px-6 py-2"><p class="h-4"></p></td>
+                    {% endfor %}
+                  </tr>
+                  {% endfor %}           
+                {% endif %}
+              </tbody>
           </table>
           <nav class="absolute bottom-0 flex items-center justify-center w-full text-center my-4">
             <ul>

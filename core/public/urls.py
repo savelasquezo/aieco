@@ -21,13 +21,18 @@ urlpatterns = [
 
 
     path('accounts/admin', views.AccountView.as_view(), name='admin'),
+    path('accounts/admin/search', views.AccountSearchView.as_view(), name='search'),
     path('accounts/admin/files', views.AccountFilesView.as_view(), name='files'),
     path('accounts/admin/galery', views.AccountGaleryView.as_view(), name='galery'),
     path('accounts/admin/support', views.AccountSupportView.as_view(), name='support'),
 
+    path('accounts/admin/shop', views.AccountShopView.as_view(), name='shop'),
+    path('accounts/admin/shop/tickets', views.AccountShopTicketsView.as_view(), name='tickets'),
+
     path('accounts/admin/billing', views.AccountBillingView.as_view(), name='billing'),
     path('accounts/admin/billing/pdf', views.MakePDFView.as_view(), name='invoice'),
     path('accounts/admin/billing/history', views.AccountHistoryView.as_view(), name='history'),
+    path('accounts/admin/billing/methods', views.AccountMethodsView.as_view(), name='methods'),
 
     path('@', views.ComingSoonView, name='ComingSoon'),
 

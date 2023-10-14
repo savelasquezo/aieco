@@ -36,14 +36,16 @@
             <div class="{{ message.tags }} flex flex-col items-center justify-center h-full w-full">
                 <ul class="ul-messages text-xs items-center text-center">
                 {% for message in messages %}
-                  <p {% if message.tags %} class="text-2xl font-bold {{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</p>
+                  <p {% if message.tags %} class="text-sm {{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</p>
                 {% endfor %}
                 </ul>
                 <a href="{% url 'support' %}" class="w-1/4 px-4 py-2 mt-4 bg-blue-700 text-white text-center font-semibold rounded hover:bg-blue-800 focus:outline-none focus:bg-blue-800 uppercase transition-colors duration-300">Volver</a>
             </div>
           {% else %}
-            <form method="post" class="container flex flex-col justify-center items-start mx-auto p-4 gap-y-6">
+            <form method="POST" class="container flex flex-col justify-center items-start mx-auto p-4 gap-y-6">
               {% csrf_token %}
+              <input type="hidden" id="{{ form.account.id_for_label }}" name="{{ form.account.name }}" value="{{user.id}}">
+              <input type="hidden" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" value="{{user.email}}">
               <div class="h-12 w-full flex flex-row items-center justify-center gap-x-4 ">
                 <div class="w-1/2 h-full flex flex-col">
                   <label for="{{ form.first_name.id_for_label }}" class="tracking-wide text-gray-600 font-thin text-sm uppercase">Nombre</label>
@@ -66,7 +68,7 @@
                 <textarea id="{{ form.messages.id_for_label }}" name="{{ form.messages.name }}" class="block w-full h-full px-3 py-2 mt-1 text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200 focus:outline-none focus:border-blue-500 resize-none" required></textarea>
               </div>
               <div class="flex items-center justify-center w-full">
-                <button class="w-full px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 focus:outline-none focus:bg-blue-800 uppercase transition-colors duration-300" type="submit" >Enviar</button>
+                <button type="submit" class="w-full px-4 py-2 bg-blue-700 text-white rounded hover:bg-blue-800 focus:outline-none focus:bg-blue-800 uppercase transition-colors duration-300"  >Enviar</button>
               </div>
             </form>
           {% endif %}
