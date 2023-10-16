@@ -24,10 +24,11 @@
     <!-- Tailwind CSS ================================ -->
     {% tailwind_css %}
     <link type="text/css" href="{% static 'css/styles.css' %}" rel="stylesheet">
+    <link type="text/css" href="{% static 'css/deafult.config.css' %}" rel="stylesheet">
 </head>
 <body>
     {% include 'components/header.html' %}
-    <div class="bg-background01 w-full h-full overlay table">
+    <div class="bg-background01 bg-cover bg-center bg-no-repeat w-full h-full table text-white bg-inherit relative z-10 after:text-inherit after:bg-black after:bg-opacity-80 after:block after:absolute after:top-0 after:left-0 after:w-full after:h-full after:content-[''] after:z-[-1]">
         <div class="table-cell pt-20">
             <div class="flex flex-col justify-center items-center my-0 mx-auto py-0 px-4 text-center w-full max-w-[960px]">
                 <img src="{% static '/images/logo1.png' %}" alt="logo" class="w-1/2 h-auto">
@@ -83,7 +84,7 @@
                 </div>
             </div>
         </section>
-        <section class="flex flex-col justify-center items-center pt-20 px-32 bg-background02 h-full w-full text-center">
+        <section class="flex flex-col justify-center items-center pt-20 px-32 bg-slate-950 bg-background02 bg-cover bg-center bg-no-repeat h-full w-full text-center">
             <p class="text-gray-300 uppercase text-lg font-thin">¡Expertos en normativas & certificaciones!</p><br>
             <h2 class="text-gray-300 text-5xl font-thin">ASESORIAS INTEGRALES<br>ESPECIALIZADAS</h2>
             <div class="flex flex-row gap-x-4 py-12">

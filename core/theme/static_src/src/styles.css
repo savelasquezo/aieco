@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {font-family: 'Animace';src: url('/static/fonts/Animeace.ttf') format('truetype');}
+@font-face {font-family: 'Roboto';src: url('/static/fonts/Roboto.ttf') format('truetype');}
+@font-face {font-family: 'Montserrat';src: url('/static/fonts/Roboto.ttf') format('truetype');}
+@font-face {font-family: 'Courier';src: url('/static/fonts/Courier.ttf') format('truetype');}

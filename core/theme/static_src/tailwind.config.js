@@ -42,7 +42,21 @@ module.exports = {
         // '../../**/*.py'
     ],
     theme: {
-        extend: {},
+        extend: {
+            fontFamily: {
+                'Animace': ['Animace', 'sans'],
+                'Roboto': ['Roboto', 'sans'],
+                'Montserrat': ['Montserrat', 'sans'],
+                'Courier': ['Courier', 'sans'],
+            },
+            backgroundColor: {
+                'gray-special': 'rgb(35 40 45)',
+            },
+            backgroundImage: {
+                'background01': "url('../images/background01.jpg')",
+                'background02': "url('../images/background02.jpg')",
+            },
+        },
     },
     plugins: [
         /**
