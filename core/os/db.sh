@@ -2,7 +2,7 @@
 
 export FECHA=`date +%d_%m_%Y_%H_%M_%S`
 export NAME=${FECHA}.dump
-export DIR=/home/aieco/core/db
+export DIR=/home/app/aieco/core/db
 USER_DB=postgres
 NAME_DB=dbaieco
 cd $DIR
