@@ -1,5 +1,7 @@
 from .settings  import *
 
+NPM_BIN_PATH = '/usr/bin/npm'
+
 DEBUG = False
 
 ALLOWED_HOSTS = ["5.183.9.247","aieco.com.co","www.aieco.com.co"]
