@@ -47,6 +47,7 @@ share/python-wheels/
 MANIFEST
 **/node_modules
 **/package-lock.json
+package-lock.json
 
 
 
