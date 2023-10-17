@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from .models import Account, AccountFiles, Settings, AccountBilling, AccountBillingAddons, AccountNotification
 
 class AiecoCronJob(CronJobBase):
-    RUN_EVERY_MINS = 1
+    RUN_EVERY_MINS = 60 * 24
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'public.AiecoCronJob'
