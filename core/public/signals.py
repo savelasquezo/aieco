@@ -1,18 +1,27 @@
 import os
+from datetime import datetime, timedelta
 
 from django.db.models import Sum
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.conf import settings
+
 from dateutil.relativedelta import relativedelta
 
-from .models import Account, AccountBilling, RequestFiles, AccountFiles, Files, AccountBillingAddons
+from .models import Account, AccountBilling, RequestFiles, AccountFiles, Files, AccountBillingAddons, AccountNotification
 
 @receiver(pre_save, sender= Account)
 def accountBilling_edit_record(sender, instance, **kwargs):
     try:
-        setToday = timezone.now().astimezone(timezone.get_current_timezone())
+
+        setToday = timezone.now()
+        if setToday.day < 15:
+            setToday = datetime(setToday.year, setToday.month, 15, tzinfo=timezone.get_current_timezone())
+        else:
+            nextMonth = setToday.replace(day=1) + timedelta(days=32)
+            setToday = datetime(nextMonth.year, nextMonth.month, 1, tzinfo=timezone.get_current_timezone())
+
         datToday = setToday + relativedelta(months=1)
         extToday = setToday + relativedelta(months=1, days=5)
 
@@ -29,7 +38,14 @@ def accountBilling_edit_record(sender, instance, **kwargs):
 def accountBilling_add_record(sender, instance, **kwargs):
     try:
         if not instance.is_inspector and not instance.is_staff:
-            setToday = timezone.now().astimezone(timezone.get_current_timezone())
+
+            setToday = timezone.now()
+            if setToday.day < 15:
+                setToday = datetime(setToday.year, setToday.month, 15, tzinfo=timezone.get_current_timezone())
+            else:
+                nextMonth = setToday.replace(day=1) + timedelta(days=32)
+                setToday = datetime(nextMonth.year, nextMonth.month, 1, tzinfo=timezone.get_current_timezone())
+
             datToday = setToday + relativedelta(months=1)
             extToday = setToday + relativedelta(months=1, days=5)
 
@@ -71,6 +87,7 @@ def requestFiles_edit_record(sender, instance, **kwargs):
                 code=instance.code,
                 filename= instance.filename,
                 file_validity=instance.file_validity,
+                is_forever=instance.is_forever,
                 files=instance.file
             )
 
@@ -100,7 +117,8 @@ def requestFiles_edit_record(sender, instance, **kwargs):
                 file = instance.file,
                 filename= instance.filename,
                 date_request = instance.date_request,
-                file_validity = instance.file_validity
+                file_validity = instance.file_validity,
+                is_forever=instance.is_forever,
             )
         
             totalAddons = AccountBillingAddons.objects.filter(billing=accountBilling).aggregate(sumTotal=Sum('price'))
@@ -138,8 +156,13 @@ def accountBilling_send_record(sender, instance, **kwargs):
                     files= i.file,
                     file_date=timezone.now(),
                     file_validity=i.file_validity,
+                    is_forever=i.is_forever,
                     file_state=True
                 )
+
+                requestFile = RequestFiles.objects.get(account=accountID, code=i.code)
+                requestFile.do = "send"
+                requestFile.save()
              
             instance.date_succes = timezone.now()
 
@@ -147,3 +170,4 @@ def accountBilling_send_record(sender, instance, **kwargs):
             with open(os.path.join(settings.BASE_DIR, 'logs/signals.log'), 'a') as f:
                 eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
                 f.write("Undefined requestfilesSendEdit--> Date: {} Error: {}\n".format(eDate, str(e)))
+

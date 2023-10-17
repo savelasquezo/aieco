@@ -1,4 +1,5 @@
 import re, os, io
+from datetime import date
 
 from django.conf import settings
 from django.urls import reverse
@@ -114,10 +115,6 @@ class AccountSearchView(LoginRequiredMixin, TemplateView):
 
             nitAccount = model.Account.objects.get(nit=nitCompany)
             iFiles = model.AccountFiles.objects.filter(account=nitAccount).order_by("id")[:ITEMS*MAXPAGES]
-            for i in iFiles:
-                if not i.file_state:
-                    i.files = None
-                    i.save()
 
             iListFiles = Paginator(iFiles,ITEMS).get_page(self.request.GET.get('page'))
 
@@ -162,10 +159,6 @@ class AccountFilesView(LoginRequiredMixin, TemplateView):
             accountFiles = accountFiles.filter(filename__icontains=nameFile)
 
         iFiles = accountFiles.order_by("id")[:ITEMS*MAXPAGES]
-        for i in iFiles:
-            if not i.file_state:
-                i.files = None
-                i.save()
 
         iListFiles = Paginator(iFiles,ITEMS).get_page(request.GET.get('page'))
 
@@ -189,15 +182,22 @@ class AccountFilesView(LoginRequiredMixin, TemplateView):
         codeFile = request.POST.get('codeFile')
         codeFile = model.Files.objects.get(code=codeFile)
         try:
-            iFile = model.AccountFiles.objects.get(code=codeFile,account=request.user)
-            iFile.delete()
 
-            newFileRequest = model.RequestFiles.objects.create(
+            requestFile = model.RequestFiles.objects.get(code=codeFile,account=request.user)
+            requestFile.delete()
+
+            accountFile = model.AccountFiles.objects.get(code=codeFile,account=request.user)
+            renewalFile = accountFile.files
+
+            model.RequestFiles.objects.create(
                 account = request.user,
                 code = codeFile,
+                file = renewalFile,
                 filename = codeFile.filename,
+                is_renewal = True,
             )
-            newFileRequest.save()
+
+            accountFile.delete()
             messages.success(request, '¡Solicitud Realizada!', extra_tags="title")
             
         except Exception as e:
@@ -367,10 +367,13 @@ class AccountShopView(LoginRequiredMixin, TemplateView):
         codeFile = model.Files.objects.get(code=codeFile)
 
         try:
+            dateValidity = date.today() if not codeFile.is_forever else date(3000, 1, 1)
             newFileRequest = model.RequestFiles.objects.create(
                 account = request.user,
                 code = codeFile,
                 filename = codeFile.filename,
+                file_validity = dateValidity,
+                is_forever = codeFile.is_forever,
             )
 
             newFileRequest.save()

@@ -51,12 +51,12 @@ class PaymentMethodsInline(admin.StackedInline):
     fieldsets = (
         (" ", dFile),)
 
-class FilesInline(admin.StackedInline):
+class AccountFilesInline(admin.StackedInline):
     
     model = model.AccountFiles
     extra = 0
     dFile = {"fields": (
-            ("code","filename"),
+            ("code","filename","is_forever"),
             ("files","file_state"),
             ("file_date","file_validity")
         )}
@@ -64,8 +64,7 @@ class FilesInline(admin.StackedInline):
     fieldsets = (
         (" ", dFile),)
 
-
-    readonly_fields = ('filename','file_date','code','files',)
+    readonly_fields = ('filename','file_date','code','files','is_forever','file_validity')
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -76,7 +75,6 @@ class NotificationInline(admin.StackedInline):
     fk_name = "account"
     extra = 0
     dNotification = {"fields": (
-            "sender",
             ("subject","read","archived"),
             "message"
         )}
@@ -86,6 +84,8 @@ class NotificationInline(admin.StackedInline):
     
     readonly_fields = ('sender','read','archived')
 
+    formfield_overrides = {
+        models.TextField: {'widget': CKEditorWidget()},}
 
 class AccountBillingAddonsInline(admin.StackedInline):
     
@@ -93,14 +93,14 @@ class AccountBillingAddonsInline(admin.StackedInline):
     fk_name = "billing"
     extra = 0
     dNotification = {"fields": (
-            ("code","file"),
+            ("code","file","is_forever"),
             ("date_request","file_validity","price"),
         )}
 
     fieldsets = (
         ("", dNotification),)
     
-    readonly_fields = ["file","code","date_request","file_validity","price",]
+    readonly_fields = ["file","code","date_request","file_validity","price","is_forever"]
 
     def has_add_permission(self, request, obj=None):
         return False
@@ -169,7 +169,7 @@ class AccountAdmin(UserAdmin):
 
     def get_fieldsets(self, request, obj=None):
         fieldsets = super().get_fieldsets(request, obj)
-        self.inlines = [FilesInline, NotificationInline]
+        self.inlines = [AccountFilesInline, NotificationInline]
         if obj and obj.is_superuser or obj is None:
             fieldsets = [fieldsets[0]]
             self.inlines = []
@@ -346,14 +346,14 @@ class FilesAdmin(admin.ModelAdmin):
         "normative",
         "entity",
         "update",
-        "validity",
+        "is_forever",
         "is_active",
         )
 
     fFile = {"fields": (
         ("code","filename"),
         ("entity","normative"),
-        ("update","validity","is_active"),
+        ("update","validity","is_active","is_forever"),
         
 
         )}
@@ -364,7 +364,7 @@ class FilesAdmin(admin.ModelAdmin):
 
     es_formats.DATETIME_FORMAT = "d M Y"
 
-    list_filter = ['is_active','entity']
+    list_filter = ['is_active','entity','is_forever']
     search_fields = ['code','filename','normative']
 
 class RequestFilesAdmin(admin.ModelAdmin):
@@ -376,11 +376,13 @@ class RequestFilesAdmin(admin.ModelAdmin):
         "filename",
         "price",
         "do",
+        "is_renewal",
         )
 
     fFile = {"fields": (
         ("account","code","filename"),
         ("file","price"),
+        ("is_forever","is_renewal"),
         ("file_validity","do"),
         )}
 
@@ -400,7 +402,7 @@ class RequestFilesAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         if obj and obj.do in ["send", "bill"]:
             return [field.name for field in self.model._meta.fields]
-        return ['account','code','filename']
+        return ['account','code','filename','is_forever','is_renewal']
 
 class SettingsAdmin(admin.ModelAdmin):
 

@@ -1,6 +1,7 @@
 from .settings  import *
 
 NPM_BIN_PATH = '/usr/bin/npm'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 DEBUG = False
 

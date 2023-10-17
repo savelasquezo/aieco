@@ -78,7 +78,7 @@
                 <td class="whitespace-nowrap w-32 px-6 py-2">{{i.normative}}</td>
                 <td class="whitespace-nowrap w-24 px-6 py-2">{{i.entity}}</td>
                 <td class="whitespace-nowrap w-32 px-6 py-2">{{i.update|date:'d M Y'}}</td>
-                <td class="whitespace-nowrap w-24 px-6 py-2">{{i.validity}}</td>
+                <td class="whitespace-nowrap w-24 px-6 py-2">{% if i.is_forever %}N/A{% else %}{{i.validity}}{% endif %}</td>
                 <td class="whitespace-nowrap w-16 px-6 py-2 font-Courier">
                   {% if user.is_inspector or user.is_staff %}
                   <span class="uppercase text-xs bg-gray-400 text-gray-100 font-semibold px-2 py-1 rounded-sm">-</span>

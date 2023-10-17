@@ -35,10 +35,10 @@
         {% if arrayNotifications %}
         <div class="col-span-2 gap-y-2 p-3 flex flex-col items-center justify-start w-full h-full bg-gray-100 rounded-md shadow-inner overflow-scroll overflow-x-hidden">
           {% for i in arrayNotifications %}
-          <div id="dlog-notify-{{ forloop.counter }}" dlogID="{{ i.id }}" data-subject="{{ i.sender }}" data-senders="{{ i.sender.email }}" data-message="{{ i.message }}"
+          <div id="dlog-notify-{{ forloop.counter }}" dlogID="{{ i.id }}" data-message="{{ i.message|safe }}"
             class="{% if i.read %}bg-gray-200{% else %}bg-green-200{% endif %} w-full h-14 rounded-md flex flex-row justify-between py-2 px-4 cursor-pointer hover:shadow-inner hover:bg-gray-300 transition duration-300">
-            <div class="flex flex-col justify-between">
-              <p class="text-xs uppercase font-semibold">{{ i.sender }}</p>
+            <div class="flex flex-col justify-center gap-y-1">
+              <p class="text-xs uppercase font-semibold">Aieco</p>
               <p class="text-[10px] font-semibold uppercase">{{ i.subject }}</p>
             </div>
             <p class="text-sm font-thin">{{ i.date|date:'d M' }}</p>
@@ -76,8 +76,8 @@
         <div class="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div class="relative bg-gray-100 px-4 py-14 rounded shadow-md w-2/3 h-[75vh]" id="dialog">
               <div class="flex flex-row items-center gap-x-4 w-full bg-white border border-gray-200 rounded px-4 py-1 my-2 text-xl font-semibold">
-                <p id="dialog-subject"></p>
-                <p id="dialog-senders" class="text-sm text-gray-600"></p>
+                <p id="dialog-subject">Aieco-</p>
+                <p id="dialog-senders" class="text-sm text-gray-600"><-info@aieco.com.co></p>
               </div>
               <div id="dialog-message" class="w-full bg-white border border-gray-200 rounded px-4 py-4 my-2 h-5/6 "></div>
               <button class="text-white bg-red-500 hover:bg-red-700 absolute top-4 right-4 px-1 rounded transition duration-300" id="close-button"><i class="fa-solid fa-xmark"></i></button>

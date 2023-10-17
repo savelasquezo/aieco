@@ -169,12 +169,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '')
 MEDIA_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.hostinger.com'
-EMAIL_PORT = 465
+EMAIL_HOST_USER = 'noreply@aieco.com'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
-EMAIL_HOST_USER = 'info@aieco.com'
-EMAIL_HOST_PASSWORD = '95yUSR13diM#'
+EMAIL_PORT = 465
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800  # 50 MB

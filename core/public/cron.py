@@ -8,7 +8,7 @@ from django.utils import timezone
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 
-from .models import Account, AccountFiles, Settings, AccountBilling, AccountBillingAddons
+from .models import Account, AccountFiles, Settings, AccountBilling, AccountBillingAddons, AccountNotification
 
 class AiecoCronJob(CronJobBase):
     RUN_EVERY_MINS = 1
@@ -30,6 +30,9 @@ class AiecoCronJob(CronJobBase):
             accountFiles = AccountFiles.objects.filter(account=i, file_state=True).order_by("id")
             for j in accountFiles:
 
+                if j.is_forever:
+                    break 
+
                 dateValidity = j.file_validity
 
                 mValidity = (datToday - timezone.timedelta(days=30)).date()
@@ -37,8 +40,20 @@ class AiecoCronJob(CronJobBase):
                 dValidity = (datToday - timezone.timedelta(days=1)).date()
 
                 if dateValidity < datToday.date():
-                    j.file_state = False
-                    j.save()
+                    try:
+                        infoMessage = f"El Documento {j.code}-{j.filename} está próximo a vencer!\n Fecha de Vencimiento: {dateValidity}\n\n ¡Comunícate con Nuestro servicio de soporte para agendar la renovación!"
+                        newNotification = AccountNotification.objects.create(
+                            account=i,
+                            subject="Advertencia de Vencimiento",
+                            message=infoMessage,
+                        )
+
+                        j.file_state = False
+                        j.save()
+
+                    except Exception as e:
+                        with open(os.path.join(settings.BASE_DIR, 'logs/cron.log'), 'a') as f:
+                            f.write("EmailError {} AccountNotification--> Error: {}\n".format(datToday.strftime("%Y-%m-%d %H:%M"), str(e)))
                 
                 if dateValidity == mValidity or dateValidity == wValidity or dateValidity == dValidity:
                     try:
@@ -64,7 +79,7 @@ class AiecoCronJob(CronJobBase):
                         email = render_to_string(email_template_name, c)
                         try:
                             send_mail(subject, message=None, from_email='noreply@aieco.com',
-                                    recipient_list=[i.email,"aieco@aieco.com"], fail_silently=False, html_message=email)
+                                    recipient_list=[i.email,"info@aieco.com.co"], fail_silently=False, html_message=email)
                         except Exception as e:
                             with open(os.path.join(settings.BASE_DIR, 'logs/cron.log'), 'a') as f:
                                 f.write("EmailError {} EmailSendAlert--> Error: {}\n".format(datToday.strftime("%Y-%m-%d %H:%M"), str(e)))

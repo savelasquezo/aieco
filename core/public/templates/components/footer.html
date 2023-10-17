@@ -5,8 +5,8 @@
             <img src="{% static '/images/logo1.png' %}" class="h-8" />
             <div class="flex flex-col items-center justify-center">
                 <div class="flex flex-col justify-center items-start gap-x-2 ">
-                    <p class="-mt-1 font-thin text-gray-400">{{settings.mail|default:"mail@mail.com"}}</p>
-                    <p class="-mt-1 font-thin text-gray-400">{{settings.mail|default:"30000000000"}}</p>
+                    <p class="-mt-1 font-thin text-gray-400">{{settings.email|default:"admin@aieco.com.co"}}</p>
+                    <p class="-mt-1 font-thin text-gray-400">+{{settings.idx|default:"57"}} {{settings.phone|default:"30000000000"}}</p>
                 </div>
             </div>
         </div>

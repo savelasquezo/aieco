@@ -76,7 +76,7 @@
                   <td class="whitespace-nowrap w-40 px-6 py-2">{{i.filename}}</td>
                   <td class="whitespace-nowrap w-24 px-6 py-2">{% if i.do == "waiting" %}---{% else %}${{i.price|intcomma}}{% endif %}</td>
                   <td class="whitespace-nowrap w-32 px-6 py-2">{{i.date_request|date:'d M Y'}}</td>
-                  <td class="whitespace-nowrap w-24 px-6 py-2">{% if i.do == "waiting" %}---{% else %}{{i.file_validity|date:'d M Y'}}{% endif %}</td>
+                  <td class="whitespace-nowrap w-24 px-6 py-2">{% if i.is_forever %}N/A{% else %}{% if i.do == "waiting" %}---{% else %}{{i.file_validity|date:'d M Y'}}{% endif %}{% endif %}</td>
                   <td class="whitespace-nowrap w-16 px-6 py-2 font-Courier">
                     {% if i.do == "waiting" %}
                     <form method="POST">

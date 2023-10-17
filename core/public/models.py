@@ -47,7 +47,7 @@ class Account(AbstractUser):
     address = models.CharField(_("Direccion"), max_length=128)
 
     billing_code = models.CharField(_("Codigo"), max_length=150, unique=True, null=False, blank=False)
-    payment = models.IntegerField(_("Trimestralidad"), default=200000, null=False, blank=False, help_text="$Trimestralidad")
+    payment = models.IntegerField(_("Mensualidad"), default=50000, null=False, blank=False, help_text="$Mensualidad")
 
     payment_date = models.DateField(_("Actual"), default=timezone.now, help_text="Fecha de Facturacion")
     due_date = models.DateField(_("Suspencion"), default=timezone.now, help_text="Fecha de Vencimiento ")
@@ -126,16 +126,11 @@ class AccountBilling(models.Model):
 
 class AccountNotification(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='received_notifications')
-    sender = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='sent_notifications')
     subject = models.CharField(_("Asunto"),blank=True, null=True, max_length=64)
     message = models.TextField(_("Mensaje"),blank=True, null=True)
     date = models.DateField(auto_now_add=True)
     read = models.BooleanField(_("¿Leido?"),default=False)
     archived = models.BooleanField(_("¿Archivado?"),default=False)
-
-    def save(self, *args, **kwargs):
-        self.sender = self.account
-        super(AccountNotification, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.id}"
@@ -237,6 +232,8 @@ class Files(models.Model):
     update = models.DateField(_("Actualizado"), default=timezone.now)
     validity = models.IntegerField(_("Vigencia (Dias)"), default=365, null=False, blank=False, help_text="$Valides del Documento")
 
+    is_forever = models.BooleanField(_("¿Eterno?"), default=False)
+
     is_active = models.BooleanField(_("¿Activo?"), default=True)
 
     def __str__(self):
@@ -257,6 +254,8 @@ class AccountBillingAddons(models.Model):
     date_request = models.DateField(_("Solicitado"), default=timezone.now)
     file_validity = models.DateField(_("Vencimiento"), default=timezone.now)
 
+    is_forever = models.BooleanField(_("¿Eterno?"), default=False)
+
     def __str__(self):
         return f"{self.code}"
     
@@ -274,6 +273,8 @@ class AccountFiles(models.Model):
     
     file_date = models.DateField(_("Inscrito"), default=timezone.now)
     file_validity = models.DateField(_("Vencimiento"), default=timezone.now)
+
+    is_forever = models.BooleanField(_("¿Eterno?"), default=False)
 
     file_state = models.BooleanField(_("¿Disponible?"), default=True)
 
@@ -309,6 +310,9 @@ class RequestFiles(models.Model):
     price = models.BigIntegerField(_("$Costo"), default=0, null=True, blank=True, help_text="$Valor del Documento")
     date_request = models.DateField(_("Solicitado"), default=timezone.now)
     file_validity = models.DateField(_("Vencimiento"), default=timezone.now)
+
+    is_forever = models.BooleanField(_("¿Eterno?"), default=False)
+    is_renewal = models.BooleanField(_("¿Renovacion?"), default=False)
 
     do = models.CharField(choices=lst_sts, max_length=64, default='waiting', verbose_name="", null=False, blank=False, 
         help_text="Activar: Enviar Archivo sin Facturar/ Facturar: Facturar Documento sin Enviar")
